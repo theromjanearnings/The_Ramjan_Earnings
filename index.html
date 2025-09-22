@@ -5,9 +5,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no"/>
   <title>The_Anisur_Earnings_Bot (Firebase)</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-  <!-- Spin Wheel লাইব্রেরি যুক্ত করা হলো -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/latest/TweenMax.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/winwheeljs@2.8.0/Winwheel.min.js"></script>
   <style>
     :root {
       --primary-color: #6a11cb;
@@ -33,6 +30,7 @@
       --rank-gold: #ffd700;
       --rank-silver: #c0c0c0;
       --rank-bronze: #cd7f32;
+      /* নতুন সংযোজন: XP এবং লেভেলের জন্য রঙ */
       --xp-color: #ff9800;
       --level-color: #9c27b0;
     }
@@ -53,6 +51,7 @@
     .view.active { display: block; }
     @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
 
+    /* পরিবর্তিত হেডার: নোটিফিকেশন আইকন যুক্ত করা হয়েছে */
     .header { display: flex; align-items: center; justify-content: space-between; padding: 0 5px 15px 5px; }
     .header-left { display: flex; align-items: center; }
     .header-avatar { width: 40px; height: 40px; border-radius: 50%; margin-right: 12px; overflow: hidden; }
@@ -89,6 +88,7 @@
     .tier-badge.bronze { background-color: var(--tier-bronze-color); }
     .tier-badge.silver { background-color: var(--tier-silver-color); }
     .tier-badge.gold { background-color: var(--tier-gold-color); }
+    /* নতুন সংযোজন: লেভেল ব্যাজের জন্য স্টাইল */
     .level-badge { font-size: 12px; font-weight: 700; padding: 4px 10px; border-radius: 12px; color: white; background-color: var(--level-color); }
 
     .info-list .info-item { display: flex; justify-content: space-between; align-items: center; padding: 15px 0; border-bottom: 1px solid #eee; }
@@ -102,7 +102,8 @@
     .profile-action-button i:first-child { margin-right: 15px; width: 20px; text-align: center; color: var(--primary-color); }
     .profile-action-button span { flex-grow: 1; font-weight: 600; }
     .profile-action-button i:last-child { color: var(--text-muted-color); }
-    
+
+    /* নতুন সংযোজন: XP პროগ্রেস বারের জন্য স্টাইল */
     .xp-progress-card { text-align: left; padding: 15px; }
     .xp-progress-card .progress-info { display: flex; justify-content: space-between; margin-bottom: 10px; font-size: 14px; font-weight: 600; color: var(--text-color); }
     .xp-progress-card .progress-info .level { color: var(--level-color); }
@@ -185,6 +186,7 @@
     .history-item-info { flex-grow: 1; display: flex; flex-direction: column; }
     .history-item-info .title { font-size: 16px; font-weight: 600; margin-bottom: 4px; }
     .history-item-info .details { font-size: 13px; color: var(--text-muted-color); }
+    /* নতুন সংযোজন: উইথড্রয়াল ডিটেইলসের জন্য স্টাইল */
     .withdrawal-details { font-size: 12px; margin-top: 5px; padding: 8px; background-color: #f9f9f9; border-radius: 6px; }
     .withdrawal-details p { margin: 3px 0; }
     
@@ -199,6 +201,7 @@
     .no-history, .no-referrals, .no-data { text-align: center; color: var(--text-muted-color); padding: 50px 20px; background: var(--card-bg); border-radius: 12px; }
     .no-history i, .no-referrals i, .no-data i { font-size: 48px; margin-bottom: 15px; color: #ccc; }
 
+    /* নতুন সংযোজন: নোটিফিকেশন মডালের জন্য স্টাইল */
     .notification-list { list-style: none; padding: 0; }
     .notification-item { display: flex; padding: 15px 0; border-bottom: 1px solid #eee; }
     .notification-item:last-child { border-bottom: none; }
@@ -383,101 +386,6 @@
         font-weight: 700;
         color: var(--status-success);
     }
-    
-    /* #### START: NEW FEATURES CSS #### */
-    #spin-wheel-container {
-        position: relative;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        margin: 20px 0;
-    }
-    .spin-pointer {
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -135px); /* Position it at the top center */
-        font-size: 32px;
-        color: var(--primary-color);
-        z-index: 10;
-        text-shadow: 1px 1px 2px rgba(0,0,0,0.3);
-    }
-
-    #scratch-card-container {
-        position: relative;
-        width: 280px;
-        height: 150px;
-        margin: 20px auto;
-        border-radius: 10px;
-        overflow: hidden;
-        cursor: pointer;
-        border: 2px dashed var(--primary-color);
-    }
-    .scratch-prize {
-        width: 100%;
-        height: 100%;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        font-size: 24px;
-        font-weight: bold;
-        color: var(--primary-color);
-        background-color: #f9f9f9;
-    }
-    #scratch-canvas {
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-    }
-
-    .video-item {
-        display: flex;
-        align-items: center;
-        padding: 10px;
-        margin-bottom: 10px;
-        border: 1px solid #eee;
-        border-radius: 8px;
-    }
-    .video-item i { font-size: 24px; color: var(--status-failed); margin-right: 15px; }
-    .video-info { flex-grow: 1; }
-    .video-info h5, .video-info p { margin: 0; }
-    .video-info h5 { font-weight: 600; }
-    .video-info p { font-size: 0.85rem; color: #777; }
-    
-    .quiz-option-btn {
-        display: block;
-        width: 100%;
-        margin-bottom: 10px;
-        padding: 12px;
-        border: 2px solid #ddd;
-        border-radius: 8px;
-        background: none;
-        font-size: 1rem;
-        text-align: left;
-        cursor: pointer;
-    }
-    .quiz-option-btn.selected {
-        background-color: #e3d1ff;
-        border-color: var(--primary-color);
-    }
-    .quiz-option-btn.correct { background-color: #d4edda; border-color: var(--status-success); }
-    .quiz-option-btn.wrong { background-color: #f8d7da; border-color: var(--status-failed); }
-
-    #captcha-image {
-        padding: 10px;
-        border: 1px solid #ddd;
-        border-radius: 8px;
-        background: #f1f1f1;
-        font-family: 'Courier New', Courier, monospace;
-        font-size: 24px;
-        letter-spacing: 5px;
-        text-decoration: line-through;
-        margin-bottom: 15px;
-        user-select: none;
-    }
-    /* #### END: NEW FEATURES CSS #### */
   </style>
 </head>
 <body>
@@ -491,6 +399,7 @@
     <div id="announcement-banner-container"></div>
     <main id="main-content">
 
+      <!-- পরিবর্তিত হেডার: নোটিফিকেশন আইকন যুক্ত করা হয়েছে -->
       <div id="common-header" class="header">
         <div class="header-left">
             <div class="header-avatar" id="header-avatar-placeholder"></div>
@@ -532,58 +441,6 @@
 
       <div id="earn-view" class="view">
         <div id="ad-networks-container"></div>
-        
-        <!-- #### START: NEW FEATURES HTML #### -->
-        
-        <div class="card" id="spin-wheel-section" style="display: none; text-align: center;">
-            <h3 class="section-title">Spin & Win</h3>
-            <p id="spin-details-p">Spin the wheel to win exciting prizes!</p>
-            
-            <div id="spin-wheel-container">
-                <i class="fa-solid fa-caret-down spin-pointer"></i>
-                <canvas id="spin-canvas" width="280" height="280">Canvas not supported.</canvas>
-            </div>
-
-            <button id="spin-now-button" class="action-button primary-button" onclick="window.startSpin()">
-                <i class="fa-solid fa-sync-alt"></i> Spin Now
-            </button>
-            <p id="spins-left-p" style="margin-top: 10px; color: var(--text-muted-color);"></p>
-        </div>
-        
-        <div class="card" id="scratch-card-section" style="display: none; text-align: center;">
-            <h3 class="section-title">Scratch & Win</h3>
-            <p id="scratch-details-p">Scratch the card to reveal your prize!</p>
-            <div id="scratch-card-container">
-                <div id="scratch-prize-text" class="scratch-prize"></div>
-                <canvas id="scratch-canvas"></canvas>
-            </div>
-            <p id="scratches-left-p" style="margin-top: 10px; color: var(--text-muted-color);"></p>
-        </div>
-
-        <div id="video-zone-section" style="display: none;">
-            <h3 class="section-title" style="margin-top: 25px; margin-bottom: 10px;">Video Zone</h3>
-            <div id="video-zone-container"></div>
-        </div>
-
-        <div class="card" id="quiz-section" style="display: none; text-align: center;">
-            <h3 class="section-title">Play Quiz & Earn</h3>
-            <p>Test your knowledge and earn points for every correct answer!</p>
-            <div id="quiz-categories-container" style="margin: 20px 0;"></div>
-        </div>
-        
-        <div class="card" id="captcha-section" style="display: none; text-align: center;">
-            <h3 class="section-title">Captcha Entry</h3>
-            <p id="captcha-details-p">Enter the text below to earn points.</p>
-            <div id="captcha-image">LOADING...</div>
-            <div class="form-group">
-                <input type="text" id="captcha-input" placeholder="Enter captcha text">
-            </div>
-            <button id="captcha-submit-button" class="action-button primary-button" onclick="window.submitCaptcha()">Submit</button>
-            <p id="captchas-left-p" style="margin-top: 10px; color: var(--text-muted-color);"></p>
-        </div>
-
-        <!-- #### END: NEW FEATURES HTML #### -->
-
         <div class="card daily-checkin-card" id="daily-checkin-section" style="display: none; margin-top: 25px;">
             <h3>Daily Check-in Bonus</h3><p>Claim your daily reward and keep your streak!</p>
             <div id="checkin-timeline-container"></div>
@@ -662,6 +519,7 @@
             <h2 id="profile-name" class="name">User <span id="profile-tier-badge"></span> <span id="profile-level-badge"></span></h2>
             <p id="profile-username" class="username">@username</p>
         </div>
+        <!-- নতুন সংযোজন: XP პროগ্রেস কার্ড -->
         <div class="card xp-progress-card" id="xp-progress-section" style="display: none;">
             <div class="progress-info">
                 <span class="level" id="profile-level-text">Level 1</span>
@@ -772,30 +630,6 @@
       </div>
   </div>
 
-  <!-- #### START: NEW QUIZ MODAL #### -->
-  <div class="modal-overlay" id="quiz-modal">
-    <div class="modal-content">
-        <div class="modal-header"><h3 id="quiz-modal-title">Quiz Time!</h3></div>
-        <div class="modal-body" id="quiz-modal-body">
-            <div id="quiz-question-container" style="display: none;">
-                <p id="quiz-progress-text" style="text-align: center; font-weight: bold;"></p>
-                <p id="quiz-question-text" style="font-size: 1.1rem; margin-bottom: 20px;"></p>
-                <div id="quiz-options-container"></div>
-            </div>
-            <div id="quiz-result-container" style="display: none; text-align: center;">
-                <h4>Quiz Complete!</h4>
-                <p id="quiz-result-summary"></p>
-                <p id="quiz-total-reward"></p>
-            </div>
-        </div>
-        <div class="modal-actions" id="quiz-modal-actions">
-             <button id="quiz-next-btn" class="action-button primary-button" onclick="window.nextQuizQuestion()">Next Question</button>
-             <button id="quiz-close-btn" class="action-button secondary-button" onclick="window.closeModal('quiz-modal')" style="display: none;">Close</button>
-        </div>
-    </div>
-  </div>
-  <!-- #### END: NEW QUIZ MODAL #### -->
-
 
   <div class="timer-notification-overlay" id="timer-notification-overlay"><div class="timer-notification-content" id="timer-notification-content"></div></div>
   <div class="modal-overlay" id="global-notification-modal">
@@ -818,7 +652,7 @@
 
 <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
-    import { getDatabase, ref, onValue, set, get, update, push, runTransaction, query, orderByChild, equalTo } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
+    import { getDatabase, ref, onValue, set, get, update, push, runTransaction, onChildAdded, query, orderByChild, equalTo } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
     import { getStorage, ref as storageRef, uploadBytes, getDownloadURL } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-storage.js";
 
     const bootstrapFirebaseConfig = {
@@ -844,16 +678,6 @@
     let currentHistoryPage = 1;
     const itemsPerPage = 15;
     let currentReferralsPage = 1;
-    let allUsersDataForReferrals = {};
-
-    // #### START: NEW FEATURE VARIABLES ####
-    let theWheel;
-    let wheelSpinning = false;
-    let isScratching = false;
-    let currentCaptcha = '';
-    let currentQuiz = {};
-    // #### END: NEW FEATURE VARIABLES ####
-
 
     async function bootstrapApp() {
         try {
@@ -963,11 +787,9 @@
 
     async function initializeUser() {
         onValue(userRef, async (snapshot) => {
-            let justCreated = false;
             if (snapshot.exists()) {
                 userData = snapshot.val();
             } else {
-                justCreated = true;
                 const startParam = window.Telegram?.WebApp?.initDataUnsafe?.start_param;
                 let initialBalance = 0; let initialHistory = {};
                 if (appConfig.welcomeBonusEnabled && appConfig.welcomeBonus > 0) {
@@ -979,18 +801,11 @@
                     balance: initialBalance, totalEarnings: initialBalance, totalAdsWatched: 0, totalReferralCommission: 0,
                     referralsList: {}, transactionHistory: initialHistory, tasksState: {},
                     checkinState: { streak: 0, lastClaimTimestamp: null },
-                    adTracking: { dailyCount: 0, hourlyCount: 0, lastAdTimestamp: null, lastHourlyReset: null },
-                    dailyStats: { adsWatched: 0, referralCommission: 0, referrals: 0, lastReset: new Date().toISOString() },
+                    adTracking: { dailyCount: 0, hourlyCount: 0, lastAdTimestamp: null },
+                    dailyStats: { adsWatched: 0, referralCommission: 0, lastReset: new Date().toISOString() },
                     leaderboardStats: { score: 0, lastReset: new Date().toISOString() },
                     isBlocked: false, joinedAt: new Date().toISOString(), blockReason: null,
-                    xp: 0, level: 1,
-                    // #### START: NEW USER STATE ####
-                    spinState: { dailyCount: 0, lastSpinDate: null },
-                    scratchState: { dailyCount: 0, lastScratchDate: null },
-                    watchedVideos: {},
-                    quizState: { lastQuizDate: null },
-                    captchaState: { dailyCount: 0, lastCaptchaDate: null }
-                    // #### END: NEW USER STATE ####
+                    xp: 0, level: 1 
                 };
                 
                 if (startParam) {
@@ -1005,18 +820,6 @@
                            newUser.profile.referredBy = null;
                         } else {
                            await set(push(ref(database, `app/users/${startParam}/referralsList`)), { userId: tgUser.id, joinedAt: new Date().toISOString() });
-                           
-                           // Update referrer's daily stats for referrals
-                           const referrerDailyStats = referrerData.dailyStats || {};
-                           const isNewDayForReferrer = isNewDay(referrerDailyStats.lastReset);
-                           const newDailyReferrals = isNewDayForReferrer ? 1 : (referrerDailyStats.referrals || 0) + 1;
-                           const newLastReset = isNewDayForReferrer ? new Date().toISOString() : referrerDailyStats.lastReset;
-                           
-                           await update(referrerRef, {
-                               'dailyStats/referrals': newDailyReferrals,
-                               'dailyStats/lastReset': newLastReset
-                           });
-
                            if (appConfig.gamification?.enabled) {
                                const xpForReferral = appConfig.gamification.xpPerReferral || 0;
                                if (xpForReferral > 0) {
@@ -1047,11 +850,7 @@
                 isUserLoaded = true; 
                 initializeAppUI(); 
             }
-
-            if (!justCreated) {
-                await checkAndResetAdLimits();
-            }
-
+            await checkAndResetDailyStats();
             await checkVpnStatus(); 
             updateDisplay();
         });
@@ -1095,22 +894,14 @@
 
     function listenForNotifications() {
         if (!tgUser) return; const notificationsRef = ref(database, `app/users/${tgUser.id}/notifications`);
-        onValue(notificationsRef, (snapshot) => {
-            let hasUnread = false;
-            if (snapshot.exists()) {
-                 snapshot.forEach((childSnapshot) => {
-                     const notification = childSnapshot.val();
-                     if (notification && !notification.read) {
-                         hasUnread = true;
-                     }
-                 });
-            }
-            if (hasUnread) {
+        onChildAdded(notificationsRef, (snapshot) => {
+            const notification = snapshot.val();
+            if (notification && !notification.read) {
+                showToast(`Admin: ${notification.message}`, 'info', 5000);
                 document.getElementById('notification-dot').style.display = 'block';
             }
-        }, { onlyOnce: true });
+        });
     }
-
 
     function listenForGlobalNotifications() {
         onValue(globalNotificationRef, (snapshot) => {
@@ -1215,42 +1006,10 @@
         renderAdNetworks();
         if (appConfig.dailyCheckinEnabled) { document.getElementById('daily-checkin-section').style.display = 'block'; renderCheckinDays(); } else { document.getElementById('daily-checkin-section').style.display = 'none'; }
         if (appConfig.tasksEnabled) { document.getElementById('tasks-section').style.display = 'block'; renderTasks(); } else { document.getElementById('tasks-section').style.display = 'none'; }
-        
-        // #### START: RENDER NEW FEATURES DYNAMICALLY ####
-        renderSpinWheel();
-        renderScratchCard();
-        renderVideoZone();
-        renderQuizSection();
-        renderCaptchaSection();
-        // #### END: RENDER NEW FEATURES DYNAMICALLY ####
     }
         
     function isNewDay(timestamp) { if (!timestamp) return true; const today = new Date().setHours(0, 0, 0, 0); const thatDay = new Date(timestamp).setHours(0, 0, 0, 0); return today > thatDay; }
-    function isNewHour(timestamp) {
-        if (!timestamp) return true;
-        const now = new Date();
-        const lastReset = new Date(timestamp);
-        return now.getHours() !== lastReset.getHours() || now.toDateString() !== lastReset.toDateString();
-    }
-
-    async function checkAndResetAdLimits() {
-        const updates = {};
-        const now = new Date();
-
-        if (isNewDay(userData.dailyStats?.lastReset)) {
-            updates['dailyStats'] = { adsWatched: 0, referralCommission: 0, referrals: 0, lastReset: now.toISOString() };
-            updates['adTracking/dailyCount'] = 0;
-        }
-
-        if (isNewHour(userData.adTracking?.lastHourlyReset)) {
-            updates['adTracking/hourlyCount'] = 0;
-            updates['adTracking/lastHourlyReset'] = now.toISOString();
-        }
-        
-        if (Object.keys(updates).length > 0) {
-            await update(userRef, updates);
-        }
-    }
+    async function checkAndResetDailyStats() { if (!userData.dailyStats || isNewDay(userData.dailyStats.lastReset)) { await update(userRef, { 'dailyStats': { adsWatched: 0, referralCommission: 0, lastReset: new Date().toISOString() }, 'adTracking/dailyCount': 0, 'adTracking/hourlyCount': 0 }); } }
 
     window.showView = (viewId) => {
         if (!isConfigLoaded || !isUserLoaded) return; 
@@ -1300,8 +1059,6 @@
             }
         });
         document.getElementById('refer-today-commission').textContent = `${userData.dailyStats?.referralCommission || 0} Points`;
-        document.getElementById('refer-today-referrals').textContent = userData.dailyStats?.referrals || 0;
-
         document.getElementById('profile-balance').innerHTML = `${pointsBalance.toLocaleString()} Points <span class="bdt-value">${currencySymbol} ${balanceInBdt.toFixed(2)}</span>`;
         document.getElementById('profile-total-earnings').innerHTML = `${(userData.totalEarnings || 0).toLocaleString()} Points <span class="bdt-value">${((userData.totalEarnings || 0) / pointsPerCurrency).toFixed(2)} ${currencySymbol}</span>`;
         document.getElementById('profile-ads-watched').textContent = userData.totalAdsWatched || 0;
@@ -1393,23 +1150,11 @@
                 const referrerSnapshot = await get(referrerRef);
                 if (referrerSnapshot.exists()) {
                     const referrerData = referrerSnapshot.val();
-                    
-                    const isNewDayForReferrer = isNewDay(referrerData.dailyStats?.lastReset);
-                    const newDailyCommission = isNewDayForReferrer ? commissionAmount : (referrerData.dailyStats?.referralCommission || 0) + commissionAmount;
-
                     const updates = {
                         'balance': (referrerData.balance || 0) + commissionAmount,
                         'totalReferralCommission': (referrerData.totalReferralCommission || 0) + commissionAmount,
-                        'totalEarnings': (referrerData.totalEarnings || 0) + commissionAmount,
-                        'dailyStats/referralCommission': newDailyCommission
+                        'dailyStats/referralCommission': (referrerData.dailyStats?.referralCommission || 0) + commissionAmount
                     };
-
-                    if (isNewDayForReferrer) {
-                         updates['dailyStats/lastReset'] = new Date().toISOString();
-                         updates['dailyStats/adsWatched'] = 0; 
-                         updates['dailyStats/referrals'] = 0;
-                    }
-
                     updates[`transactionHistory/ref_${Date.now()}`] = {
                         type: 'referral',
                         amount: commissionAmount,
@@ -1449,8 +1194,7 @@
             
             const updates = {
                 level: currentLevel + 1,
-                balance: (userData.balance || 0) + bonus,
-                totalEarnings: (userData.totalEarnings || 0) + bonus
+                balance: (userData.balance || 0) + bonus
             };
             updates[`transactionHistory/levelup_${Date.now()}`] = { type: 'manual', amount: bonus, title: `Level Up to ${currentLevel + 1}!`, date: new Date().toISOString() };
             
@@ -1463,9 +1207,9 @@
         }
     }
     
-    async function grantReward(adNetworkName, baseRewardPoints) {
+    async function grantReward(adNetwork, baseRewardPoints) {
         const tier = getCurrentUserTier(), bonusPoints = Math.floor(baseRewardPoints * (tier.bonusPercent / 100));
-        const totalReward = baseRewardPoints + bonusPoints; const transactionTitle = bonusPoints > 0 ? `${adNetworkName} Ad Reward (+${bonusPoints} bonus)` : `${adNetworkName} Ad Reward`;
+        const totalReward = baseRewardPoints + bonusPoints; const transactionTitle = bonusPoints > 0 ? `${adNetwork.name} Ad Reward (+${bonusPoints} bonus)` : `${adNetwork.name} Ad Reward`;
         
         const updates = {
             'balance': (userData.balance || 0) + totalReward, 
@@ -1486,19 +1230,25 @@
         if (window.Telegram?.WebApp?.HapticFeedback) Telegram.WebApp.HapticFeedback.notificationOccurred('success');
     }
     
-    window.startAdCycle = () => {
+    // START: নতুন যুক্তকৃত এবং পরিবর্তিত ফাংশন
+    window.startAdCycleFor = (networkName) => {
         if (isEarningBlocked) { return showToast("Earning is disabled due to network policy.", "error"); }
 
+        // নতুন কনফিগারেশন থেকে ডেটা লোড করা হচ্ছে
         const adConfig = appConfig.adSystemConfig?.primaryAd;
         if (!adConfig || !adConfig.enabled) {
             return showToast("This earning method is temporarily unavailable.", "info");
         }
-        
+
+        const network = (appConfig.adNetworks || []).find(n => n.name === networkName);
+        if (!network) return;
+
         const adTracking = userData.adTracking || { dailyCount: 0, hourlyCount: 0 };
         if (adTracking.dailyCount >= (appConfig.adsLimit || 250) || adTracking.hourlyCount >= (appConfig.hourlyAdsLimit || 25)) return;
         
         const overlay = document.getElementById('timer-notification-overlay'), overlayContent = document.getElementById('timer-notification-content');
         
+        // নতুন কনফিগারেশন থেকে টাইমার ব্যবহার করা হচ্ছে
         const adTimerSeconds = adConfig.timer || 30;
         
         const adFunctionName = `show_${appConfig.libtlZoneId}`;
@@ -1516,10 +1266,11 @@
         
         setTimeout(async () => {
             clearInterval(intervalId);
+            // নতুন কনফিগারেশন থেকে পুরস্কার ব্যবহার করা হচ্ছে
             let rewardPoints = adConfig.reward || 1;
             
             const totalRewardWithBonus = rewardPoints + Math.floor(rewardPoints * (getCurrentUserTier().bonusPercent / 100));
-            await grantReward("Primary", rewardPoints);
+            await grantReward(network, rewardPoints);
             overlayContent.innerHTML = `<div class="icon" style="color: var(--status-success);"><i class="fa-solid fa-check-circle"></i></div><div>+${totalRewardWithBonus} Points!</div>`;
             setTimeout(() => { overlay.style.display = 'none'; }, 2500);
         }, adTimerSeconds * 1000);
@@ -1552,7 +1303,7 @@
             clearInterval(intervalId);
             let baseRewardPoints = rewardedConfig.reward || 0;
             
-            await grantReward('Rewarded Task', baseRewardPoints); 
+            await grantReward({ name: 'Rewarded Task' }, baseRewardPoints); 
 
             const totalRewardWithBonus = baseRewardPoints + Math.floor(baseRewardPoints * (getCurrentUserTier().bonusPercent / 100));
             overlayContent.innerHTML = `<div class="icon" style="color: var(--status-success);"><i class="fa-solid fa-check-circle"></i></div><div>Extra Bonus: +${totalRewardWithBonus} Points!</div>`;
@@ -1591,62 +1342,27 @@
             }, 2600);
         }
     }
+    // END: নতুন যুক্তকৃত এবং পরিবর্তিত ফাংশন
 
     function renderCheckinDays() {
-        const timelineContainer = document.getElementById('checkin-timeline-container'),
-              claimButton = document.getElementById('claim-checkin-button');
-        const checkinRewards = appConfig.dailyCheckinRewards || [];
-        if (!timelineContainer || !claimButton || checkinRewards.length === 0) return;
-
-        const { streak = 0, lastClaimTimestamp = null } = userData.checkinState || {};
-        const canClaimToday = isNewDay(lastClaimTimestamp);
+        const timelineContainer = document.getElementById('checkin-timeline-container'), claimButton = document.getElementById('claim-checkin-button');
+        const checkinRewards = appConfig.dailyCheckinRewards || []; if (!timelineContainer || !claimButton || checkinRewards.length === 0) return;
+        const { streak = 0, lastClaimTimestamp = null } = userData.checkinState || {}; const canClaimToday = isNewDay(lastClaimTimestamp);
         let isClaimable = false, claimableReward = 0;
-
         timelineContainer.innerHTML = checkinRewards.map((dayInfo, index) => {
-            const reward = dayInfo.reward;
-            let status = 'locked', icon = '🎁';
-            if (index < streak) {
-                status = 'claimed'; icon = '<i class="fa-solid fa-check"></i>';
-            } else if (index === streak && canClaimToday) {
-                status = 'claimable'; icon = '<i class="fa-solid fa-gift"></i>';
-                isClaimable = true;
-                claimableReward = reward;
-            }
+            const reward = dayInfo.reward; let status = 'locked', icon = '🎁';
+            if (index < streak) { status = 'claimed'; icon = '<i class="fa-solid fa-check"></i>'; }
+            else if (index === streak && canClaimToday) { status = 'claimable'; icon = '<i class="fa-solid fa-gift"></i>'; isClaimable = true; claimableReward = reward; }
             return `<div class="day-item ${status}"><div class="day-content"><div class="day-circle">${icon}</div><div class="day-reward">${reward} Points</div><div class="day-number">Day ${index + 1}</div></div></div>`;
         }).join('');
-        
-        const hourlyLimit = appConfig.hourlyAdsLimit || 25;
-        const hourlyCount = userData.adTracking?.hourlyCount || 0;
-        const hourlyLimitMet = hourlyCount >= hourlyLimit;
-
-        if (isClaimable) {
-            if (hourlyLimitMet) {
-                claimButton.innerHTML = `<i class="fa-solid fa-gift"></i> Claim ${claimableReward} Points`;
-                claimButton.disabled = false;
-            } else {
-                const remainingAds = hourlyLimit - hourlyCount;
-                claimButton.innerHTML = `<i class="fa-solid fa-play-circle"></i> Watch ${remainingAds} more ads`;
-                claimButton.disabled = true;
-            }
-        } else if (streak >= checkinRewards.length) {
-            claimButton.innerHTML = `<i class="fa-solid fa-check-circle"></i> Cycle Complete`;
-            claimButton.disabled = true;
-        } else {
-            claimButton.innerHTML = `<i class="fa-solid fa-clock"></i> Come back tomorrow`;
-            claimButton.disabled = true;
-        }
+        if (isClaimable) { claimButton.innerHTML = `<i class="fa-solid fa-gift"></i> Claim ${claimableReward} Points`; claimButton.disabled = false; }
+        else if (streak >= checkinRewards.length) { claimButton.innerHTML = `<i class="fa-solid fa-check-circle"></i> Cycle Complete`; claimButton.disabled = true; }
+        else { claimButton.innerHTML = `<i class="fa-solid fa-clock"></i> Come back tomorrow`; claimButton.disabled = true; }
     }
-
 
     function initializeEventListeners() {
         document.getElementById('claim-checkin-button').addEventListener('click', async () => {
             if (isEarningBlocked) { return showToast("Earning is disabled due to network policy.", "error"); }
-            const hourlyLimit = appConfig.hourlyAdsLimit || 25;
-            const hourlyCount = userData.adTracking?.hourlyCount || 0;
-            if (hourlyCount < hourlyLimit) {
-                return showToast(`You need to watch ${hourlyLimit - hourlyCount} more ads this hour to claim.`, "error");
-            }
-
             const checkinRewards = appConfig.dailyCheckinRewards || []; const { streak = 0, lastClaimTimestamp = null } = userData.checkinState || {};
             if (streak < checkinRewards.length && isNewDay(lastClaimTimestamp)) {
                 const dayInfo = checkinRewards[streak]; if (!dayInfo) return;
@@ -1674,43 +1390,10 @@
     }
 
     function renderAdNetworks() {
-        const container = document.getElementById('ad-networks-container');
-        if (!appConfig.adSystemConfig?.primaryAd?.enabled) {
-            container.innerHTML = "";
-            return;
-        }
-        
+        const container = document.getElementById('ad-networks-container'); if (!container || !appConfig.adNetworksEnabled || !appConfig.adNetworks) return container.innerHTML = "";
         const hourlyLimit = appConfig.hourlyAdsLimit || 25;
-        const dailyLimit = appConfig.adsLimit || 250;
-        
-        container.innerHTML = `
-            <div class="ad-network-card">
-                <div class="card progress-card" style="margin-bottom: 12px;">
-                    <h3>Watch Ads</h3>
-                    <div class="progress-info">
-                        <span>Completed: <span class="tasks-completed-daily">0</span></span>
-                        <span>Remaining: <span class="tasks-remaining-daily">${dailyLimit}</span></span>
-                    </div>
-                    <div class="progress-bar"><div class="progress-bar-inner"></div></div>
-                    <div class="limits-grid">
-                        <div class="limit-card">
-                            <div class="icon"><i class="fa-solid fa-clock"></i></div>
-                            <h3 class="value hourly-limit-value">0/${hourlyLimit}</h3>
-                            <p class="label">Hourly Limit</p>
-                        </div>
-                        <div class="limit-card">
-                            <div class="icon"><i class="fa-solid fa-calendar-day"></i></div>
-                            <h3 class="value daily-limit-value">0/${dailyLimit}</h3>
-                            <p class="label">Daily Limit</p>
-                        </div>
-                    </div>
-                    <button class="action-button primary-button watch-ad-button" onclick="window.startAdCycle()">
-                        <i class="fa-solid fa-play-circle"></i> Watch Ad & Earn
-                    </button>
-                </div>
-            </div>`;
+        container.innerHTML = appConfig.adNetworks.filter(n => n.enabled).map(network => `<div class="ad-network-card"><a href="#" class="earn-option-card" onclick="event.preventDefault(); document.querySelector('.watch-ad-button[data-network=\\'${network.name}\\']').click();"><div class="logo-wrapper"><img src="${appConfig.assets?.adNetworkLogo || ''}" alt="${network.name} Logo"></div><div class="info-wrapper"><span class="company-name">${network.name}</span><span class="subtitle">Watch ads & get rewards</span></div><div class="action-wrapper"><i class="fa-solid fa-chevron-right"></i></div></a><div class="card progress-card" style="margin-top: -5px; border-radius: 0 0 12px 12px; margin-bottom: 12px;"><h3>Watch Ads</h3><div class="progress-info"><span>Completed: <span class="tasks-completed-daily">0</span></span><span>Remaining: <span class="tasks-remaining-daily">${appConfig.adsLimit || 250}</span></span></div><div class="progress-bar"><div class="progress-bar-inner"></div></div><div class="limits-grid"><div class="limit-card"><div class="icon"><i class="fa-solid fa-clock"></i></div><h3 class="value hourly-limit-value">0/${hourlyLimit}</h3><p class="label">Hourly Limit</p></div><div class="limit-card"><div class="icon"><i class="fa-solid fa-calendar-day"></i></div><h3 class="value daily-limit-value">0/${appConfig.adsLimit || 250}</h3><p class="label">Daily Limit</p></div></div><button class="action-button primary-button watch-ad-button" data-network="${network.name}" onclick="window.startAdCycleFor('${network.name}')"><i class="fa-solid fa-play-circle"></i> Watch Ad & Earn</button></div></div>`).join('');
     }
-
     
     function renderTasks() {
         const container = document.getElementById('tasks-container');
@@ -1905,7 +1588,6 @@
             const reward = transactionResult.snapshot.val().reward;
             const updates = { 
                 'balance': (userData.balance || 0) + reward,
-                'totalEarnings': (userData.totalEarnings || 0) + reward,
                 'leaderboardStats/score': (userData.leaderboardStats?.score || 0) + reward
             };
             updates[`transactionHistory/promo_${Date.now()}`] = { type: 'manual', amount: reward, title: `Promo Code: ${trimmedCode}`, date: new Date().toISOString() };
@@ -2113,43 +1795,36 @@
         }
     }
 
-    async function cacheAllUsers() {
-        const snapshot = await get(usersRef);
-        if (snapshot.exists()) {
-            allUsersDataForReferrals = snapshot.val();
-        }
-    }
-    
     window.renderReferralsList = async (page = 1) => {
-        if (Object.keys(allUsersDataForReferrals).length === 0) {
-            await cacheAllUsers();
-        }
         currentReferralsPage = page;
         const container = document.getElementById('referrals-list-container');
         const paginationContainer = document.getElementById('referrals-pagination-container');
         const searchInput = document.getElementById('referral-search-input').value.toLowerCase();
-        
-        const referralEntries = Object.values(userData.referralsList || {});
+        const referrals = userData.referralsList || {};
+        const referralEntries = Object.values(referrals);
+
         if (referralEntries.length === 0) {
             container.innerHTML = `<div class="no-referrals"><i class="fa-solid fa-user-group"></i><p>You haven't referred anyone yet.</p></div>`;
             paginationContainer.innerHTML = '';
             return;
         }
-        
         container.innerHTML = '<p style="text-align: center;">Loading referrals...</p>';
-        
-        const filteredReferrals = referralEntries.map(ref => {
-            const referredUser = allUsersDataForReferrals[ref.userId];
-            if (!referredUser) return null;
 
-            const name = `${referredUser.profile?.firstName || ''} ${referredUser.profile?.lastName || ''}`.trim() || 'No Name';
-            const username = referredUser.profile?.username || '';
-            
-            if (!searchInput || name.toLowerCase().includes(searchInput) || username.toLowerCase().includes(searchInput)) {
-                return referredUser;
+        let todayReferralsCount = 0;
+        const today = new Date().setHours(0, 0, 0, 0);
+        
+        const userPromises = referralEntries.map(ref => get(ref(database, `app/users/${ref.userId}`)));
+        const userSnapshots = await Promise.all(userPromises);
+        
+        const filteredReferrals = userSnapshots.filter(userSnapshot => {
+            if(userSnapshot.exists()){
+                const referredUser = userSnapshot.val();
+                const name = `${referredUser.profile?.firstName || ''} ${referredUser.profile?.lastName || ''}`.trim() || 'No Name';
+                const username = referredUser.profile?.username || '';
+                return !searchInput || name.toLowerCase().includes(searchInput) || username.toLowerCase().includes(searchInput);
             }
-            return null;
-        }).filter(Boolean).sort((a,b) => new Date(b.joinedAt) - new Date(a.joinedAt));
+            return false;
+        }).map(s => s.val()).sort((a,b) => new Date(b.joinedAt) - new Date(a.joinedAt));
 
 
         const totalPages = Math.ceil(filteredReferrals.length / itemsPerPage);
@@ -2162,6 +1837,10 @@
             const joinDate = new Date(referredUser.joinedAt);
             const joinDateStr = joinDate.toLocaleDateString();
             
+            if (joinDate.setHours(0, 0, 0, 0) === today) {
+                todayReferralsCount++;
+            }
+
             return `
                 <div class="history-item referral">
                     <div class="icon-wrapper"><i class="fa-solid fa-user-check"></i></div>
@@ -2173,6 +1852,7 @@
         }).join('');
         
         container.innerHTML = listHtml || `<div class="no-referrals"><p>No matching referrals found.</p></div>`;
+        document.getElementById('refer-today-referrals').textContent = todayReferralsCount;
         renderPaginationControls(paginationContainer, totalPages, page, 'renderReferralsList');
     };
 
@@ -2478,449 +2158,6 @@
             }
         }
     };
-    
-    // #### START: NEW FEATURES JAVASCRIPT LOGIC ####
-
-    // --- Spin Wheel Logic ---
-    function renderSpinWheel() {
-        const config = appConfig.spinWheel || {};
-        const section = document.getElementById('spin-wheel-section');
-        if (!config.enabled || !config.segments || config.segments.length === 0) {
-            section.style.display = 'none';
-            return;
-        }
-        section.style.display = 'block';
-
-        const segments = config.segments.map(s => ({
-            'fillStyle': '#' + Math.floor(Math.random()*16777215).toString(16).padStart(6, '0'),
-            'text': s.text,
-            'value': s.value
-        }));
-
-        if (theWheel) {
-            theWheel.stopAnimation(false);
-            theWheel = null;
-        }
-
-        theWheel = new Winwheel({
-            'numSegments': segments.length,
-            'outerRadius': 135,
-            'innerRadius': 20,
-            'textFontSize': 14,
-            'textFillStyle': 'white',
-            'segments': segments,
-            'animation': {
-                'type': 'spinToStop', 'duration': 5, 'spins': 8,
-                'callbackFinished': window.alertPrize,
-            }
-        });
-        updateSpinButton();
-    }
-
-    function updateSpinButton() {
-        const config = appConfig.spinWheel || {};
-        if (!config.enabled) return;
-
-        let { dailyCount = 0, lastSpinDate = null } = userData.spinState || {};
-        const isNewDayForSpin = !lastSpinDate || isNewDay(lastSpinDate);
-        if (isNewDayForSpin) dailyCount = 0;
-        
-        const spinsLeft = config.dailyLimit - dailyCount;
-        const button = document.getElementById('spin-now-button');
-        const costText = config.cost > 0 ? `(${config.cost} Points)` : '(Free)';
-
-        document.getElementById('spins-left-p').textContent = `Spins left today: ${spinsLeft}`;
-        button.innerHTML = `<i class="fa-solid fa-sync-alt"></i> Spin Now ${costText}`;
-
-        if (spinsLeft <= 0) {
-            button.disabled = true; button.textContent = 'Daily Limit Reached';
-        } else if ((userData.balance || 0) < config.cost) {
-            button.disabled = true; button.textContent = 'Not Enough Points';
-        } else {
-            button.disabled = false;
-        }
-    }
-
-    window.startSpin = async () => {
-        if (wheelSpinning) return;
-        const config = appConfig.spinWheel;
-        let { dailyCount = 0, lastSpinDate = null } = userData.spinState || {};
-        if (isNewDay(lastSpinDate)) dailyCount = 0;
-        
-        if (dailyCount >= config.dailyLimit || (userData.balance || 0) < config.cost) {
-            updateSpinButton(); return;
-        }
-
-        wheelSpinning = true;
-        document.getElementById('spin-now-button').disabled = true;
-
-        const updates = {
-            'balance': (userData.balance || 0) - config.cost,
-            'spinState/dailyCount': dailyCount + 1,
-            'spinState/lastSpinDate': new Date().toISOString()
-        };
-        if (config.cost > 0) updates[`transactionHistory/spin_cost_${Date.now()}`] = { type: 'manual', amount: -config.cost, title: 'Spin Wheel Cost', date: new Date().toISOString() };
-        
-        await update(userRef, updates);
-        
-        theWheel.startAnimation();
-    };
-
-    window.alertPrize = async (indicatedSegment) => {
-        const reward = indicatedSegment.value;
-        if (reward > 0) {
-            showToast(`Congratulations! You won ${indicatedSegment.text}!`, 'success');
-            const updates = {
-                'balance': (userData.balance || 0) + reward,
-                'totalEarnings': (userData.totalEarnings || 0) + reward,
-            };
-            updates[`transactionHistory/spin_win_${Date.now()}`] = { type: 'manual', amount: reward, title: `Spin Wheel Prize`, date: new Date().toISOString() };
-            await update(userRef, updates);
-        } else {
-            showToast('Better luck next time!', 'info');
-        }
-        
-        wheelSpinning = false;
-        theWheel.stopAnimation(false);
-        theWheel.rotationAngle = 0;
-        theWheel.draw();
-        updateSpinButton();
-    };
-    
-    // --- Scratch Card Logic ---
-    function renderScratchCard() {
-        const config = appConfig.scratchCard || {};
-        const section = document.getElementById('scratch-card-section');
-        if (!config.enabled) {
-            section.style.display = 'none'; return;
-        }
-        section.style.display = 'block';
-        updateScratchCard();
-    }
-    
-    function updateScratchCard() {
-        const config = appConfig.scratchCard || {};
-        if (!config.enabled) return;
-        
-        let { dailyCount = 0, lastScratchDate = null } = userData.scratchState || {};
-        if(isNewDay(lastScratchDate)) dailyCount = 0;
-
-        const scratchesLeft = config.dailyLimit - dailyCount;
-        document.getElementById('scratches-left-p').textContent = `Cards left today: ${scratchesLeft}`;
-        document.getElementById('scratch-details-p').textContent = `Cost: ${config.cost} Points. Scratch the card to reveal your prize!`;
-        
-        if (scratchesLeft <= 0 || (userData.balance || 0) < config.cost) {
-            document.getElementById('scratch-card-container').style.cursor = 'not-allowed';
-            document.getElementById('scratch-prize-text').textContent = (scratchesLeft <= 0) ? 'Limit Reached' : 'No Points';
-        } else {
-            document.getElementById('scratch-card-container').style.cursor = 'pointer';
-            document.getElementById('scratch-prize-text').textContent = 'SCRATCH HERE';
-            initScratchCanvas();
-        }
-    }
-
-    function initScratchCanvas() {
-        const canvas = document.getElementById('scratch-canvas');
-        const ctx = canvas.getContext('2d');
-        canvas.width = 280;
-        canvas.height = 150;
-        ctx.fillStyle = '#c0c0c0'; // Silver color
-        ctx.fillRect(0, 0, canvas.width, canvas.height);
-        
-        let isDrawing = false;
-        const scratch = (e) => {
-            if (!isDrawing) return;
-            const rect = canvas.getBoundingClientRect();
-            const x = (e.clientX || e.touches[0].clientX) - rect.left;
-            const y = (e.clientY || e.touches[0].clientY) - rect.top;
-            ctx.globalCompositeOperation = 'destination-out';
-            ctx.beginPath();
-            ctx.arc(x, y, 20, 0, 2 * Math.PI);
-            ctx.fill();
-        };
-
-        const start = (e) => { isDrawing = true; scratch(e); };
-        const end = () => { isDrawing = false; };
-        
-        canvas.onmousedown = start;
-        canvas.onmousemove = scratch;
-        canvas.onmouseup = end;
-        canvas.ontouchstart = start;
-        canvas.ontouchmove = scratch;
-        canvas.ontouchend = end;
-
-        if (!canvas.dataset.listenerAttached) {
-            canvas.addEventListener('mousedown', startScratch, {once: true});
-            canvas.addEventListener('touchstart', startScratch, {once: true});
-            canvas.dataset.listenerAttached = 'true';
-        }
-    }
-
-    async function startScratch() {
-        const config = appConfig.scratchCard || {};
-        let { dailyCount = 0, lastScratchDate = null } = userData.scratchState || {};
-        if(isNewDay(lastScratchDate)) dailyCount = 0;
-
-        if (dailyCount >= config.dailyLimit || (userData.balance || 0) < config.cost) {
-            updateScratchCard(); return;
-        }
-
-        const updates = {
-            'balance': (userData.balance || 0) - config.cost,
-            'scratchState/dailyCount': dailyCount + 1,
-            'scratchState/lastScratchDate': new Date().toISOString()
-        };
-        if (config.cost > 0) updates[`transactionHistory/scratch_cost_${Date.now()}`] = { type: 'manual', amount: -config.cost, title: 'Scratch Card Cost', date: new Date().toISOString() };
-        
-        await update(userRef, updates);
-
-        // Determine prize
-        const prizes = config.prizes || [];
-        let totalProb = prizes.reduce((acc, p) => acc + p.probability, 0);
-        let random = Math.random() * totalProb;
-        let prize = prizes[prizes.length - 1]; // default to last
-        for(let i=0; i < prizes.length; i++) {
-            if(random < prizes[i].probability) {
-                prize = prizes[i]; break;
-            }
-            random -= prizes[i].probability;
-        }
-
-        document.getElementById('scratch-prize-text').textContent = prize.text;
-
-        if (prize.value > 0) {
-            const rewardUpdates = {
-                'balance': (userData.balance || 0) - config.cost + prize.value,
-                'totalEarnings': (userData.totalEarnings || 0) + prize.value
-            };
-            rewardUpdates[`transactionHistory/scratch_win_${Date.now()}`] = { type: 'manual', amount: prize.value, title: `Scratch Card Prize`, date: new Date().toISOString() };
-            await update(userRef, rewardUpdates);
-            showToast(`You won ${prize.text}!`, 'success');
-        }
-
-        setTimeout(() => {
-            updateScratchCard();
-        }, 3000);
-    }
-
-    // --- Video Zone Logic ---
-    function renderVideoZone() {
-        const config = appConfig.videoZone || {};
-        const section = document.getElementById('video-zone-section');
-        if (!config.enabled || !config.videos || config.videos.length === 0) {
-            section.style.display = 'none'; return;
-        }
-        section.style.display = 'block';
-
-        const container = document.getElementById('video-zone-container');
-        container.innerHTML = config.videos.map((video, index) => {
-            const watched = userData.watchedVideos && userData.watchedVideos[index];
-            return `
-            <div class="card video-item">
-                <i class="fab fa-youtube"></i>
-                <div class="video-info">
-                    <h5>${video.title}</h5>
-                    <p>${video.reward} Points - ${video.duration} seconds</p>
-                </div>
-                <button class="task-button" onclick="window.watchVideo(${index})" ${watched ? 'disabled' : ''}>${watched ? 'Watched' : 'Watch'}</button>
-            </div>`;
-        }).join('');
-    }
-    
-    window.watchVideo = (index) => {
-        const config = appConfig.videoZone.videos[index];
-        window.open(config.url, '_blank');
-        
-        const overlay = document.getElementById('timer-notification-overlay');
-        overlay.style.display = 'flex';
-        let countdown = config.duration;
-        overlay.querySelector('.timer-notification-content').innerHTML = `<div>Watching Video...</div><div>${countdown}</div>`;
-        
-        const interval = setInterval(() => {
-            countdown--;
-            overlay.querySelector('.timer-notification-content').innerHTML = `<div>Watching Video...</div><div>${countdown}</div>`;
-            if (countdown <= 0) {
-                clearInterval(interval);
-                claimVideoReward(index);
-                overlay.querySelector('.timer-notification-content').innerHTML = `<div>+${config.reward} Points!</div>`;
-                setTimeout(() => overlay.style.display = 'none', 2000);
-            }
-        }, 1000);
-    };
-
-    async function claimVideoReward(index) {
-        const reward = appConfig.videoZone.videos[index].reward;
-        const updates = {
-            'balance': (userData.balance || 0) + reward,
-            'totalEarnings': (userData.totalEarnings || 0) + reward,
-            [`watchedVideos/${index}`]: true
-        };
-        updates[`transactionHistory/video_${Date.now()}`] = { type: 'task', amount: reward, title: `Video: ${appConfig.videoZone.videos[index].title}`, date: new Date().toISOString() };
-        await update(userRef, updates);
-        showToast(`Reward claimed for watching video!`, 'success');
-    }
-
-    // --- Quiz Logic ---
-    function renderQuizSection() {
-        const config = appConfig.quizSystem || {};
-        const section = document.getElementById('quiz-section');
-        if (!config.enabled || !config.categories || config.categories.length === 0) {
-            section.style.display = 'none'; return;
-        }
-        section.style.display = 'block';
-        
-        const container = document.getElementById('quiz-categories-container');
-        container.innerHTML = config.categories.map((cat, index) => 
-            `<button class="action-button secondary-button" style="margin-top: 10px;" onclick="window.startQuiz(${index})">${cat.name}</button>`
-        ).join('');
-    }
-
-    window.startQuiz = (catIndex) => {
-        const config = appConfig.quizSystem;
-        const category = config.categories[catIndex];
-        if(!category.questions || category.questions.length === 0) {
-            return showToast("No questions in this category.", "info");
-        }
-        
-        currentQuiz = {
-            categoryIndex: catIndex,
-            questionIndex: 0,
-            score: 0,
-            questions: [...category.questions].sort(() => 0.5 - Math.random()) // Shuffle questions
-        };
-
-        document.getElementById('quiz-question-container').style.display = 'block';
-        document.getElementById('quiz-result-container').style.display = 'none';
-        document.getElementById('quiz-next-btn').style.display = 'block';
-        document.getElementById('quiz-close-btn').style.display = 'none';
-        
-        displayQuizQuestion();
-        openModal('quiz-modal');
-    };
-
-    function displayQuizQuestion() {
-        const q = currentQuiz.questions[currentQuiz.questionIndex];
-        document.getElementById('quiz-progress-text').textContent = `Question ${currentQuiz.questionIndex + 1} of ${currentQuiz.questions.length}`;
-        document.getElementById('quiz-question-text').textContent = q.q;
-        const optionsContainer = document.getElementById('quiz-options-container');
-        optionsContainer.innerHTML = q.options.map(option => 
-            `<button class="quiz-option-btn" onclick="window.selectQuizOption(this, '${option}')">${option}</button>`
-        ).join('');
-    }
-
-    window.selectQuizOption = (btn, selectedOption) => {
-        const q = currentQuiz.questions[currentQuiz.questionIndex];
-        const buttons = document.querySelectorAll('.quiz-option-btn');
-        buttons.forEach(b => b.disabled = true);
-
-        if (selectedOption === q.answer) {
-            btn.classList.add('correct');
-            currentQuiz.score++;
-        } else {
-            btn.classList.add('wrong');
-            buttons.forEach(b => {
-                if(b.textContent === q.answer) b.classList.add('correct');
-            });
-        }
-    };
-
-    window.nextQuizQuestion = () => {
-        currentQuiz.questionIndex++;
-        if (currentQuiz.questionIndex < currentQuiz.questions.length) {
-            displayQuizQuestion();
-        } else {
-            showQuizResult();
-        }
-    };
-
-    async function showQuizResult() {
-        const config = appConfig.quizSystem;
-        const totalReward = currentQuiz.score * config.rewardPerCorrect;
-
-        document.getElementById('quiz-question-container').style.display = 'none';
-        document.getElementById('quiz-result-container').style.display = 'block';
-        document.getElementById('quiz-next-btn').style.display = 'none';
-        document.getElementById('quiz-close-btn').style.display = 'block';
-
-        document.getElementById('quiz-result-summary').textContent = `You answered ${currentQuiz.score} out of ${currentQuiz.questions.length} questions correctly.`;
-        document.getElementById('quiz-total-reward').textContent = `Total Reward: ${totalReward} Points`;
-
-        if (totalReward > 0) {
-            const updates = {
-                'balance': (userData.balance || 0) + totalReward,
-                'totalEarnings': (userData.totalEarnings || 0) + totalReward
-            };
-            updates[`transactionHistory/quiz_${Date.now()}`] = { type: 'task', amount: totalReward, title: `Quiz Reward`, date: new Date().toISOString() };
-            await update(userRef, updates);
-        }
-    }
-    
-    // --- Captcha Logic ---
-    function renderCaptchaSection() {
-        const config = appConfig.captchaEntry || {};
-        const section = document.getElementById('captcha-section');
-        if (!config.enabled) {
-            section.style.display = 'none'; return;
-        }
-        section.style.display = 'block';
-        generateCaptcha();
-        updateCaptchaButton();
-    }
-    
-    function generateCaptcha() {
-        const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-        let result = '';
-        for (let i = 0; i < 6; i++) {
-            result += chars.charAt(Math.floor(Math.random() * chars.length));
-        }
-        currentCaptcha = result;
-        document.getElementById('captcha-image').textContent = currentCaptcha;
-    }
-
-    function updateCaptchaButton() {
-        const config = appConfig.captchaEntry || {};
-        let { dailyCount = 0, lastCaptchaDate = null } = userData.captchaState || {};
-        if(isNewDay(lastCaptchaDate)) dailyCount = 0;
-
-        const captchasLeft = config.dailyLimit - dailyCount;
-        document.getElementById('captchas-left-p').textContent = `Captchas left today: ${captchasLeft}`;
-        
-        const button = document.getElementById('captcha-submit-button');
-        button.disabled = captchasLeft <= 0;
-    }
-
-    window.submitCaptcha = async () => {
-        const config = appConfig.captchaEntry || {};
-        let { dailyCount = 0, lastCaptchaDate = null } = userData.captchaState || {};
-        if(isNewDay(lastCaptchaDate)) dailyCount = 0;
-
-        if (dailyCount >= config.dailyLimit) {
-            return showToast("Daily limit reached.", "error");
-        }
-
-        const userInput = document.getElementById('captcha-input').value;
-        if (userInput === currentCaptcha) {
-            const reward = config.reward;
-            const updates = {
-                'balance': (userData.balance || 0) + reward,
-                'totalEarnings': (userData.totalEarnings || 0) + reward,
-                'captchaState/dailyCount': dailyCount + 1,
-                'captchaState/lastCaptchaDate': new Date().toISOString()
-            };
-            updates[`transactionHistory/captcha_${Date.now()}`] = { type: 'task', amount: reward, title: `Captcha Reward`, date: new Date().toISOString() };
-            await update(userRef, updates);
-            
-            showToast(`Correct! +${reward} points.`, 'success');
-            document.getElementById('captcha-input').value = '';
-            generateCaptcha();
-            updateCaptchaButton();
-        } else {
-            showToast('Incorrect captcha. Try again.', 'error');
-            generateCaptcha();
-        }
-    }
-
-    // #### END: NEW FEATURES JAVASCRIPT LOGIC ####
 
 </script>
 </body>
