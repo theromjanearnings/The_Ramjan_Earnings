@@ -140,7 +140,7 @@
         .overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.5); z-index: 999; opacity: 0; visibility: hidden; transition: opacity 0.3s, visibility 0.3s; }
         .overlay.active { opacity: 1; visibility: visible; }
         
-        .tier-setting, .package-setting, .text-setting, .error-message-setting, .asset-setting, .firebase-config-setting { 
+        .ad-network-setting, .tier-setting, .package-setting, .text-setting, .error-message-setting, .asset-setting, .firebase-config-setting { 
             display: grid; gap: 15px; align-items: center;
             margin-bottom: 15px; padding-bottom: 15px; border-bottom: 1px solid var(--border-color);
         }
@@ -150,6 +150,7 @@
             grid-template-columns: 1fr 1fr 1fr 1fr 1fr auto auto auto;
         }
         .task-setting { display: grid; gap: 15px; margin-bottom: 15px; padding: 15px; border: 1px solid var(--border-color); border-radius: 8px; }
+        .ad-network-setting { grid-template-columns: 2fr 1fr 1fr 1fr auto auto auto; }
         .task-setting-grid { grid-template-columns: 2fr 2fr 1fr auto auto auto; }
         .tier-setting { grid-template-columns: 1.5fr 1fr 1fr 1fr 1fr auto auto auto; }
         .package-setting { grid-template-columns: 2fr 1fr 1fr auto; }
@@ -319,19 +320,13 @@
             font-weight: 600;
             text-align: center;
         }
-        
-        /* Styles for Quiz Editor */
-        .quiz-category { border: 1px solid var(--border-color); border-radius: 8px; margin-bottom: 15px; padding: 15px; }
-        .quiz-category-header { display: flex; gap: 10px; align-items: center; margin-bottom: 10px;}
-        .quiz-question { background: #f9f9f9; border-radius: 5px; padding: 10px; margin-top: 10px; }
-        .quiz-option { display: flex; gap: 10px; align-items: center; margin-bottom: 5px; }
 
 
         @media (max-width: 768px) {
-            .tier-setting, .package-setting, .text-setting, .error-message-setting, .asset-setting, .firebase-config-setting { grid-template-columns: 1fr; gap: 10px; }
+            .ad-network-setting, .tier-setting, .package-setting, .text-setting, .error-message-setting, .asset-setting, .firebase-config-setting { grid-template-columns: 1fr; gap: 10px; }
             .method-setting { grid-template-columns: 1fr; }
             .task-setting-grid { grid-template-columns: 1fr; }
-            .method-setting .btn-remove, .task-setting .btn-remove, .tier-setting .btn-remove, .package-setting .btn-remove { margin-top: 5px; width: 100%; }
+            .method-setting .btn-remove, .task-setting .btn-remove, .ad-network-setting .btn-remove, .tier-setting .btn-remove, .package-setting .btn-remove { margin-top: 5px; width: 100%; }
             .promo-code-form { grid-template-columns: 1fr; }
 
             .data-table thead { display: none; }
@@ -652,11 +647,6 @@
                                     <label>Enable Telegram Web App Script (telegram.org/js/telegram-web-app.js)</label>
                                     <label class="switch"><input type="checkbox" id="telegramScriptEnabled"><span class="slider"></span></label>
                                 </div>
-                                <div class="form-group">
-                                    <label for="libtlZoneId">LibTL Ad Network Zone ID</label>
-                                    <input type="text" id="libtlZoneId" placeholder="e.g., 9892740">
-                                    <small>এই আইডিটি userM16.html ফাইলের libtl.com স্ক্রিপ্টে ব্যবহৃত হবে।</small>
-                                </div>
                                 <hr>
                                 <h4>Firebase Configuration <span style="color: var(--red); font-weight: bold;">(DANGER: Edit with extreme caution!)</span></h4>
                                 <div id="firebase-config-container">
@@ -686,7 +676,7 @@
                         <div class="section-card">
                             <div class="section-header" data-lang-key="settingsAssetManagement"><i class="fas fa-image"></i>Asset Management (App Images)<i class="fas fa-chevron-down toggle-icon"></i></div>
                             <div class="section-body collapsed">
-                               <p data-lang-key="assetManagementDesc" style="color: #555; margin-bottom: 15px;">ব্যবহারকারী অ্যাপে দেখানো ছবি বা আইকনের লিঙ্ক এখানে পরিবর্তন করুন। পরিবর্তনের পর userM16.html ফাইলটিও আপডেট করতে হতে পারে।</p>
+                               <p data-lang-key="assetManagementDesc" style="color: #555; margin-bottom: 15px;">ব্যবহারকারী অ্যাপে দেখানো ছবি বা আইকনের লিঙ্ক এখানে পরিবর্তন করুন। পরিবর্তনের পর userM7.html ফাইলটিও আপডেট করতে হতে পারে।</p>
                                <div class="asset-setting">
                                    <label for="asset-ad-logo" data-lang-key="assetAdLogo">Ad Network Logo URL</label>
                                    <input type="text" id="asset-ad-logo" placeholder="URL of the ad network logo">
@@ -903,6 +893,7 @@
                             </div>
                         </div>
 
+                        <!-- START: নতুন যুক্তকৃত কোড -->
                         <div class="section-card">
                             <div class="section-header"><i class="fas fa-hand-holding-usd"></i>Ad System Management<i class="fas fa-chevron-down toggle-icon"></i></div>
                             <div class="section-body collapsed">
@@ -949,50 +940,21 @@
                                 <button type="button" class="section-save-btn" onclick="window.saveAdSystemSettings()">Save Changes</button>
                             </div>
                         </div>
-                        
-                        <!-- #### START: NEW EARNING FEATURES #### -->
+                        <!-- END: নতুন যুক্তকৃত কোড -->
 
                         <div class="section-card">
-                            <div class="section-header"><i class="fas fa-bullseye"></i>Spin Wheel Settings<i class="fas fa-chevron-down toggle-icon"></i></div>
+                            <div class="section-header" data-lang-key="settingsAdNetworks"><i class="fas fa-ad"></i>Ad Network Zone IDs<i class="fas fa-chevron-down toggle-icon"></i></div>
                             <div class="section-body collapsed">
-                                <div id="spin-wheel-section"></div>
-                                <button type="button" class="section-save-btn" onclick="window.saveSpinWheelSettings()">Save Changes</button>
+                                <div class="form-group">
+                                    <label for="libtlZoneId">LibTL Ad Network Zone ID</label>
+                                    <input type="text" id="libtlZoneId" placeholder="e.g., 9892740">
+                                    <small>এই আইডিটি userM10.html ফাইলের libtl.com স্ক্রিপ্টে ব্যবহৃত হবে।</small>
+                                </div>
+                                <hr>
+                                <div id="ad-networks-section"></div>
+                                <button type="button" class="section-save-btn" onclick="window.saveAdNetworkSettings()">Save Changes</button>
                             </div>
                         </div>
-
-                        <div class="section-card">
-                            <div class="section-header"><i class="fas fa-scratch"></i>Scratch Card Settings<i class="fas fa-chevron-down toggle-icon"></i></div>
-                            <div class="section-body collapsed">
-                                <div id="scratch-card-section"></div>
-                                <button type="button" class="section-save-btn" onclick="window.saveScratchCardSettings()">Save Changes</button>
-                            </div>
-                        </div>
-
-                        <div class="section-card">
-                            <div class="section-header"><i class="fas fa-video"></i>Video Zone Settings<i class="fas fa-chevron-down toggle-icon"></i></div>
-                            <div class="section-body collapsed">
-                                <div id="video-zone-section"></div>
-                                <button type="button" class="section-save-btn" onclick="window.saveVideoZoneSettings()">Save Changes</button>
-                            </div>
-                        </div>
-
-                        <div class="section-card">
-                            <div class="section-header"><i class="fas fa-question-circle"></i>Quiz System Settings<i class="fas fa-chevron-down toggle-icon"></i></div>
-                            <div class="section-body collapsed">
-                                <div id="quiz-system-section"></div>
-                                <button type="button" class="section-save-btn" onclick="window.saveQuizSystemSettings()">Save Changes</button>
-                            </div>
-                        </div>
-
-                        <div class="section-card">
-                            <div class="section-header"><i class="fas fa-keyboard"></i>Captcha Entry Settings<i class="fas fa-chevron-down toggle-icon"></i></div>
-                            <div class="section-body collapsed">
-                                <div id="captcha-entry-section"></div>
-                                <button type="button" class="section-save-btn" onclick="window.saveCaptchaEntrySettings()">Save Changes</button>
-                            </div>
-                        </div>
-
-                        <!-- #### END: NEW EARNING FEATURES #### -->
 
                         <div class="section-card">
                             <div class="section-header" data-lang-key="settingsDailyCheckin"><i class="fas fa-calendar-check"></i>Daily Check-in Bonus<i class="fas fa-chevron-down toggle-icon"></i></div>
@@ -1250,7 +1212,7 @@
                 supportDesc: "View messages or issues sent by users here.", tableSubject: "Subject",
                 auditLogDesc: "Records of all important activities performed in the admin panel are shown here.", tableTimestamp: "Timestamp", tableAdmin: "Admin", tableAction: "Action", tableDetails: "Details",
                 settingsDataManagement: "Data Management", backupLabel: "Download a full backup of your app's data.", btnDownloadBackup: "Download Data Backup (JSON)",
-                settingsAssetManagement: "Asset Management (App Images)", assetManagementDesc: "Change the links for images or icons shown in the user app here. After changing, the userM16.html file might also need to be updated.", assetAdLogo: "Ad Network Logo URL", assetDefaultAvatar: "Default User Avatar URL",
+                settingsAssetManagement: "Asset Management (App Images)", assetManagementDesc: "Change the links for images or icons shown in the user app here. After changing, the userM7.html file might also need to be updated.", assetAdLogo: "Ad Network Logo URL", assetDefaultAvatar: "Default User Avatar URL",
                 settingsAppControl: "App Control", labelAppVersion: "App Version", labelBotUsername: "Telegram Bot Username (without @)", labelAnnouncement: "Announcement / Notice", labelAppUpdateMessage: "App Update Message", appUpdateMessageDesc: "Users on older app versions will see this message.",
                 settingsGlobalNotification: "Send Notification to All Users", labelNotificationMessage: "Notification Message", btnSendGlobalNotification: "Send Global Notification",
                 settingsAppCustomization: "App Customization", labelThemeColor: "App Primary Theme Color", labelEnableWelcomeBonus: "Enable Welcome Bonus for New Users", labelWelcomeBonus: "Welcome Bonus (Points)", labelWelcomeMessageTemplate: "Welcome Message Template", labelShoppingButtonText: "Shopping Button Text", labelShoppingButtonLink: "Shopping Button Link",
@@ -1264,7 +1226,7 @@
                 labelEnableVpnDetection: "Enable VPN/Proxy Detection", labelVpnAction: "Action on Detection", vpnActionWarn: "Warn the User", vpnActionBlockEarning: "Block from Earning", vpnActionBlockAccount: "Block Account Automatically", vpnActionDesc: "Determine what action the system will take when a VPN user is detected.",
                 settingsTargetedActions: "Targeted Actions (User Segmentation)", labelSelectTargetSegment: "Select Target Segment", segmentAllUsers: "All Active Users", segmentUsersByTier: "Users by Tier", segmentInactiveUsers: "Inactive Users", labelSelectTier: "Select Tier", labelInactiveForDays: "Inactive for more than (days)",
                 labelSelectAction: "Select Action", actionSendNotification: "Send Notification", actionGiveBonus: "Give Bonus Points", labelBonusPoints: "Bonus Points", labelReasonForBonus: "Reason for Bonus", btnExecuteAction: "Execute Action",
-                settingsDailyCheckin: "Daily Check-in Bonus", settingsTasks: "Complete Tasks", settingsUserTiers: "User Tiers",
+                settingsAdNetworks: "Ad Network Zone IDs", settingsDailyCheckin: "Daily Check-in Bonus", settingsTasks: "Complete Tasks", settingsUserTiers: "User Tiers",
                 settingsWithdrawalMonetization: "Withdrawal & Monetization", labelMinWithdrawal: "Minimum Withdrawal Limit", labelWithdrawalFee: "Withdrawal Fee (%)",
                 settingsLeaderboard: "Leaderboard Management", settingsPointStore: "Point Store", settingsTextManagement: "Text Management", settingsAdvancedTextManagement: "Advanced Text Management (UI Labels)", settingsErrorMessages: "Error Messages Control",
                 btnUpdateAllSettings: "UPDATE ALL SETTINGS",
@@ -1290,7 +1252,7 @@
                 supportDesc: "এখানে ব্যবহারকারীদের পাঠানো বার্তা বা সমস্যাগুলো দেখা যাবে।", tableSubject: "বিষয়",
                 auditLogDesc: "অ্যাডমিন প্যানেলে করা সমস্ত গুরুত্বপূর্ণ কার্যকলাপের রেকর্ড এখানে দেখানো হলো।", tableTimestamp: "সময়", tableAdmin: "অ্যাডমিন", tableAction: "কার্যকলাপ", tableDetails: "বিস্তারিত",
                 settingsDataManagement: "ডেটা ম্যানেজমেন্ট", backupLabel: "আপনার অ্যাপের ডেটার একটি সম্পূর্ণ ব্যাকআপ ডাউনলোড করুন।", btnDownloadBackup: "ডেটা ব্যাকআপ ডাউনলোড করুন (JSON)",
-                settingsAssetManagement: "অ্যাপের ছবি পরিচালনা", assetManagementDesc: "ব্যবহারকারী অ্যাপে দেখানো ছবি বা আইকনের লিঙ্ক এখানে পরিবর্তন করুন। পরিবর্তনের পর userM16.html ফাইলটিও আপডেট করতে হতে পারে।", assetAdLogo: "বিজ্ঞাপন নেটওয়ার্ক লোগো URL", assetDefaultAvatar: "ডিফল্ট ব্যবহারকারী অ্যাভাটার URL",
+                settingsAssetManagement: "অ্যাপের ছবি পরিচালনা", assetManagementDesc: "ব্যবহারকারী অ্যাপে দেখানো ছবি বা আইকনের লিঙ্ক এখানে পরিবর্তন করুন। পরিবর্তনের পর userM7.html ফাইলটিও আপডেট করতে হতে পারে।", assetAdLogo: "বিজ্ঞাপন নেটওয়ার্ক লোগো URL", assetDefaultAvatar: "ডিফল্ট ব্যবহারকারী অ্যাভাটার URL",
                 settingsAppControl: "অ্যাপ নিয়ন্ত্রণ", labelAppVersion: "অ্যাপ সংস্করণ", labelBotUsername: "টেলিগ্রাম বট ইউজারনেম (@ ছাড়া)", labelAnnouncement: "ঘোষণা / নোটিশ", labelAppUpdateMessage: "অ্যাপ আপডেট বার্তা", appUpdateMessageDesc: "ব্যবহারকারীরা অ্যাপের পুরনো সংস্করণ ব্যবহার করলে এই বার্তাটি দেখতে পাবে।",
                 settingsGlobalNotification: "সকল ব্যবহারকারীকে নোটিফিকেশন পাঠান", labelNotificationMessage: "নোটিফিকেশন বার্তা", btnSendGlobalNotification: "গ্লোবাল নোটিফিকেশন পাঠান",
                 settingsAppCustomization: "অ্যাপ কাস্টমাইজেশন", labelThemeColor: "অ্যাপের প্রাথমিক থিম রঙ", labelEnableWelcomeBonus: "নতুন ব্যবহারকারীদের জন্য স্বাগতম বোনাস সক্ষম করুন", labelWelcomeBonus: "স্বাগতম বোনাস (পয়েন্ট)", labelWelcomeMessageTemplate: "স্বাগতম বার্তার টেমপ্লেট", labelShoppingButtonText: "শপিং বাটনের লেখা", labelShoppingButtonLink: "শপিং বাটনের লিঙ্ক",
@@ -1304,7 +1266,7 @@
                 labelEnableVpnDetection: "VPN/Proxy শনাক্তকরণ চালু করুন", labelVpnAction: "শনাক্ত হলে করণীয়", vpnActionWarn: "ব্যবহারকারীকে সতর্ক করুন", vpnActionBlockEarning: "আয় করা থেকে বিরত রাখুন", vpnActionBlockAccount: "অ্যাকাউন্ট স্বয়ংক্রিয়ভাবে ব্লক করুন", vpnActionDesc: "VPN ব্যবহারকারী শনাক্ত হলে সিস্টেম কী পদক্ষেপ নেবে তা নির্ধারণ করুন।",
                 settingsTargetedActions: "টার্গেটেড অ্যাকশন (ব্যবহারকারী বিভাজন)", labelSelectTargetSegment: "টার্গেট অংশ নির্বাচন করুন", segmentAllUsers: "সকল সক্রিয় ব্যবহারকারী", segmentUsersByTier: "স্তর অনুযায়ী ব্যবহারকারী", segmentInactiveUsers: "নিষ্ক্রিয় ব্যবহারকারী", labelSelectTier: "স্তর নির্বাচন করুন", labelInactiveForDays: "এর বেশি দিন নিষ্ক্রিয় (দিন)",
                 labelSelectAction: "অ্যাকশন নির্বাচন করুন", actionSendNotification: "নোটিফিকেশন পাঠান", actionGiveBonus: "বোনাস পয়েন্ট দিন", labelBonusPoints: "বোনাস পয়েন্ট", labelReasonForBonus: "বোনাসের কারণ", btnExecuteAction: "অ্যাকশন চালান",
-                settingsDailyCheckin: "দৈনিক চেক-ইন বোনাস", settingsTasks: "টাস্ক সম্পন্ন করুন", settingsUserTiers: "ব্যবহারকারীর স্তর (User Tiers)",
+                settingsAdNetworks: "বিজ্ঞাপন নেটওয়ার্ক জোন আইডি", settingsDailyCheckin: "দৈনিক চেক-ইন বোনাস", settingsTasks: "টাস্ক সম্পন্ন করুন", settingsUserTiers: "ব্যবহারকারীর স্তর (User Tiers)",
                 settingsWithdrawalMonetization: "উত্তোলন এবং নগদীকরণ", labelMinWithdrawal: "সর্বনিম্ন উত্তোলনের সীমা", labelWithdrawalFee: "উত্তোলন ফি (%)",
                 settingsLeaderboard: "লিডারবোর্ড ব্যবস্থাপনা", settingsPointStore: "পয়েন্ট স্টোর (Store)", settingsTextManagement: "অ্যাপের টেক্সট পরিবর্তন", settingsAdvancedTextManagement: "অ্যাডভান্সড টেক্সট ম্যানেজমেন্ট (UI লেবেল)", settingsErrorMessages: "ত্রুটির বার্তা নিয়ন্ত্রণ",
                 btnUpdateAllSettings: "সমস্ত সেটিংস আপডেট করুন",
@@ -1326,6 +1288,8 @@
             adWatchTimerSeconds: 30, hourlyAdsLimit: 25,
             minReferralsForWithdrawal: 3, maintenanceMode: false,
             libtlZoneId: '9892740',
+            adNetworksEnabled: true,
+            adNetworks: [ { name: 'Monetag Ads', zoneId: '9704633', reward: 1, timer: 30, enabled: true } ],
             dailyCheckinEnabled: true,
             dailyCheckinRewards: Array.from({ length: 10 }, (_, i) => ({ day: i + 1, reward: (i + 1) * 2 })),
             tasksEnabled: true,
@@ -1425,16 +1389,11 @@
                     { level: 5, xp: 1000 }
                 ]
             },
+            // নতুন যুক্তকৃত ডিফল্ট কনফিগারেশন
             adSystemConfig: {
                 primaryAd: { enabled: true, reward: 10, timer: 30 },
                 rewardedAd: { enabled: true, reward: 20, timer: 20, triggerOnTaskCompletion: true }
-            },
-            // Default config for new features
-            spinWheel: { enabled: false, cost: 0, dailyLimit: 10, segments: [{ text: '10', value: 10 }, { text: 'Try Again', value: 0 }] },
-            scratchCard: { enabled: false, cost: 0, dailyLimit: 10, prizes: [{ text: '20', value: 20, probability: 30 }, { text: 'No Luck', value: 0, probability: 70 }] },
-            videoZone: { enabled: false, videos: [{ title: 'Sample Video', url: 'https://www.youtube.com/watch?v=dQw4w9WgXcQ', duration: 30, reward: 15 }] },
-            quizSystem: { enabled: false, rewardPerCorrect: 5, categories: [{ name: 'General Knowledge', questions: [{ q: 'What is the capital of Bangladesh?', options: ['Dhaka', 'Chittagong', 'Sylhet'], answer: 'Dhaka' }] }] },
-            captchaEntry: { enabled: false, reward: 1, dailyLimit: 50 }
+            }
         };
         
         async function logAdminAction(action, details = {}) {
@@ -1532,7 +1491,7 @@
                 if (!appConfig.firebaseConfig) appConfig.firebaseConfig = DEFAULT_CONFIG.firebaseConfig;
                 if (!appConfig.firewall) appConfig.firewall = DEFAULT_CONFIG.firewall;
                 if (!appConfig.gamification) appConfig.gamification = DEFAULT_CONFIG.gamification;
-                if (!appConfig.adSystemConfig) appConfig.adSystemConfig = DEFAULT_CONFIG.adSystemConfig; 
+                if (!appConfig.adSystemConfig) appConfig.adSystemConfig = DEFAULT_CONFIG.adSystemConfig; // নতুন সংযোজন
 
                 if (!data) {
                     set(configRef, appConfig);
@@ -1968,7 +1927,6 @@
             if (!appConfig || Object.keys(appConfig).length === 0) return;
 
             document.getElementById('telegramScriptEnabled').checked = appConfig.telegramScript?.enabled ?? true;
-            document.getElementById('libtlZoneId').value = appConfig.libtlZoneId || '';
             const fbConfig = appConfig.firebaseConfig || {};
             document.getElementById('fb-apiKey').value = fbConfig.apiKey || '';
             document.getElementById('fb-authDomain').value = fbConfig.authDomain || '';
@@ -2027,8 +1985,10 @@
                 });
             }
 
-            renderAdSystemSettings();
-            renderDailyCheckinSection(); renderTasksSection();
+            document.getElementById('libtlZoneId').value = appConfig.libtlZoneId || '9892740';
+
+            renderAdSystemSettings(); // নতুন ফাংশন কল
+            renderAdNetworksSection(); renderDailyCheckinSection(); renderTasksSection();
             renderUserTiersSection(); renderWithdrawalMethodsSection();
             renderPointPackagesSection(); renderTextManagementSection();
             renderErrorMessageSection();
@@ -2037,15 +1997,9 @@
             renderOfferwallSection();
             renderIpManagementSection();
             renderGamificationSettings();
-            // #### START: RENDER NEW FEATURES ####
-            renderSpinWheelSection();
-            renderScratchCardSection();
-            renderVideoZoneSection();
-            renderQuizSystemSection();
-            renderCaptchaEntrySection();
-            // #### END: RENDER NEW FEATURES ####
         }
 
+        // START: নতুন যুক্তকৃত ফাংশন
         function renderAdSystemSettings() {
             const config = appConfig.adSystemConfig || {
                 primaryAd: { enabled: true, reward: 10, timer: 30 },
@@ -2084,6 +2038,7 @@
                 }
             };
         });
+        // END: নতুন যুক্তকৃত ফাংশন
 
         function renderWithdrawals() {
             const tbody = document.getElementById('withdraw-table-body');
@@ -2145,7 +2100,7 @@
                 updates['adTracking/dailyCount'] = 0;
             } else if (type === 'hourly') {
                 updates['adTracking/hourlyCount'] = 0;
-                updates['adTracking/lastHourlyReset'] = null;
+                updates['adTracking/hourlyLimitResetTimestamp'] = null;
             }
 
             try {
@@ -2360,6 +2315,7 @@
             [list[index], list[newIndex]] = [list[newIndex], list[index]];
             
             switch (listKey) {
+                case 'adNetworks': renderAdNetworksSection(); break;
                 case 'tasks': renderTasksSection(); break;
                 case 'userTiers': renderUserTiersSection(); break;
                 case 'withdrawalMethods': renderWithdrawalMethodsSection(); break;
@@ -2372,6 +2328,11 @@
             container.innerHTML = `<div class="section-toggle"><label data-lang-key="${config.langKeyEnable}">${config.toggleLabel}</label><label class="switch"><input type="checkbox" id="${config.enabledId}" ${appConfig[config.enabledFlag] ? 'checked' : ''}><span class="slider"></span></label></div><div id="${config.listContainerId}" style="padding-top: 15px; border-top: 1px solid #eee; margin-top: 15px;">${listHtml}<button type="button" class="btn-add" onclick="${config.addFunction}" data-lang-key="${config.langKeyAdd}"><i class="fas fa-plus"></i> ${config.addButtonLabel}</button></div>`;
             const switchEl = document.getElementById(config.enabledId), listContainerEl = document.getElementById(config.listContainerId); listContainerEl.style.display = switchEl.checked ? 'block' : 'none'; switchEl.addEventListener('change', () => { listContainerEl.style.display = switchEl.checked ? 'block' : 'none'; });
         }
+        function renderAdNetworksSection() { 
+            const list = appConfig.adNetworks || [];
+            renderSection('ad-networks-section', list, { toggleLabel: 'Enable Ad Networks Feature', enabledId: 'adNetworksEnabled', enabledFlag: 'adNetworksEnabled', listContainerId: 'ad-networks-list', itemRenderer: (item, index) => `<div class="ad-network-setting"><input type="text" data-type="adNetworkName" data-index="${index}" value="${item.name}" placeholder="Ad Network Name"><input type="text" data-type="adNetworkZoneId" data-index="${index}" value="${item.zoneId}" placeholder="Zone ID"><input type="number" data-type="adNetworkReward" data-index="${index}" value="${item.reward}" placeholder="Reward"><input type="number" data-type="adNetworkTimer" data-index="${index}" value="${item.timer}" placeholder="Timer (s)"><label class="switch"><input type="checkbox" data-type="adNetworkItemEnabled" data-index="${index}" ${item.enabled ? 'checked' : ''}><span class="slider"></span></label><div class="order-controls"><button type="button" class="btn-order" onclick="window.moveItem('adNetworks', ${index}, 'up')" ${index === 0 ? 'disabled' : ''}>▲</button><button type="button" class="btn-order" onclick="window.moveItem('adNetworks', ${index}, 'down')" ${index === list.length - 1 ? 'disabled' : ''}>▼</button></div><button type="button" class="btn-remove" onclick="removeAdNetwork(${index})">&times;</button></div>`, addFunction: 'window.addAdNetwork()', addButtonLabel: 'Add Ad Network' }); 
+        }
+        window.addAdNetwork = () => { if (!appConfig.adNetworks) appConfig.adNetworks = []; appConfig.adNetworks.push({ name: '', zoneId: '', reward: 1, timer: 30, enabled: true }); renderAdNetworksSection(); }; window.removeAdNetwork = (index) => { if(confirm('Are you sure?')) { appConfig.adNetworks.splice(index, 1); renderAdNetworksSection(); } };
         function renderDailyCheckinSection() { const container = document.getElementById('daily-checkin-section'); container.innerHTML = `<div class="section-toggle"><label>Enable Daily Check-in Feature</label><label class="switch"><input type="checkbox" id="dailyCheckinEnabled" ${appConfig.dailyCheckinEnabled ? 'checked' : ''}><span class="slider"></span></label></div><div id="daily-checkin-list" style="padding-top: 15px; border-top: 1px solid #eee; margin-top: 15px;"><div class="days-grid">${(appConfig.dailyCheckinRewards || []).map((item, index) => `<div class="daily-checkin-item"><div class="form-group"><label class="day-label">Day ${item.day}</label><input type="number" step="0.01" data-type="checkinReward" data-index="${index}" value="${item.reward}"></div><button type="button" class="btn-remove" onclick="removeCheckinDay(${index})">&times;</button></div>`).join('')}</div><button type="button" class="btn-add" onclick="addCheckinDay()"><i class="fas fa-plus"></i> Add New Day</button></div>`; const switchEl = document.getElementById('dailyCheckinEnabled'), listEl = document.getElementById('daily-checkin-list'); listEl.style.display = switchEl.checked ? 'block' : 'none'; switchEl.addEventListener('change', () => { listEl.style.display = switchEl.checked ? 'block' : 'none'; }); }
         window.addCheckinDay = () => { if (!appConfig.dailyCheckinRewards) appConfig.dailyCheckinRewards = []; const nextDay = appConfig.dailyCheckinRewards.length + 1; appConfig.dailyCheckinRewards.push({ day: nextDay, reward: 0 }); renderDailyCheckinSection(); }; window.removeCheckinDay = (index) => { if(confirm('Are you sure?')) { appConfig.dailyCheckinRewards.splice(index, 1); appConfig.dailyCheckinRewards.forEach((item, i) => item.day = i + 1); renderDailyCheckinSection(); }};
         
@@ -2928,6 +2889,7 @@
             alert(payoutLog);
         };
 
+
         async function createSaveFunction(sectionName, logic) {
             logic();
             if (await saveConfigToFirebase()) {
@@ -2936,273 +2898,224 @@
             }
         }
         
-        // #### START: NEW FEATURE RENDER AND SAVE FUNCTIONS ####
+        window.saveTechnicalSettings = () => createSaveFunction('Technical', () => {
+             appConfig.telegramScript = {
+                enabled: document.getElementById('telegramScriptEnabled').checked
+            };
+            appConfig.firebaseConfig = {
+                apiKey: document.getElementById('fb-apiKey').value.trim(),
+                authDomain: document.getElementById('fb-authDomain').value.trim(),
+                databaseURL: document.getElementById('fb-databaseURL').value.trim(),
+                projectId: document.getElementById('fb-projectId').value.trim(),
+                storageBucket: document.getElementById('fb-storageBucket').value.trim(),
+                messagingSenderId: document.getElementById('fb-messagingSenderId').value.trim(),
+                appId: document.getElementById('fb-appId').value.trim(),
+                measurementId: document.getElementById('fb-measurementId').value.trim(),
+            };
+        });
 
-        function renderGenericEarningFeature(config) {
-            const { featureKey, containerId, sectionTitle, fields, listConfig } = config;
-            const featureConfig = appConfig[featureKey] || { enabled: false };
-            const container = document.getElementById(containerId);
-
-            let listHtml = '';
-            if (listConfig) {
-                listHtml = `
-                    <h4>${listConfig.listTitle}</h4>
-                    <div id="${featureKey}-list-container">
-                        ${(featureConfig[listConfig.listKey] || []).map(listConfig.itemRenderer).join('')}
-                    </div>
-                    <button type="button" class="btn-add" onclick="${listConfig.addFunction}"><i class="fas fa-plus"></i> ${listConfig.addButtonLabel}</button>
-                `;
-            }
-
-            let fieldsHtml = fields.map(field => `
-                <div class="form-group">
-                    <label for="${featureKey}-${field.id}">${field.label}</label>
-                    <input type="${field.type || 'number'}" id="${featureKey}-${field.id}" value="${featureConfig[field.id] || ''}" placeholder="${field.placeholder || ''}">
-                </div>
-            `).join('');
-
-            container.innerHTML = `
-                <div class="section-toggle">
-                    <label>Enable ${sectionTitle} Feature</label>
-                    <label class="switch"><input type="checkbox" id="${featureKey}-enabled" ${featureConfig.enabled ? 'checked' : ''}><span class="slider"></span></label>
-                </div>
-                <div id="${featureKey}-settings-container" style="padding-top: 15px; border-top: 1px solid #eee; margin-top: 15px;">
-                    ${fieldsHtml}
-                    ${listHtml ? '<hr>' + listHtml : ''}
-                </div>
-            `;
+        window.saveAssetSettings = () => createSaveFunction('Asset', () => {
+            appConfig.assets = {
+                adNetworkLogo: document.getElementById('asset-ad-logo').value.trim(),
+                defaultAvatar: document.getElementById('asset-default-avatar').value.trim()
+            };
+        });
+        
+        window.saveIpManagementSettings = () => createSaveFunction('IP Management', () => {
+            console.log("Saving firewall settings:", appConfig.firewall);
+        });
+        
+        window.saveAppControlSettings = () => createSaveFunction('App Control', () => {
+            appConfig.appVersion = document.getElementById('appVersion').value;
+            appConfig.appUpdateMessage = document.getElementById('appUpdateMessage').value;
+            appConfig.announcement = document.getElementById('announcement').value;
+            appConfig.botUsername = document.getElementById('botUsername').value;
+        });
+        window.saveAppCustomizationSettings = () => createSaveFunction('App Customization', () => {
+            appConfig.theme = { primaryColor: document.getElementById('themeColor').value };
+            appConfig.welcomeBonusEnabled = document.getElementById('welcomeBonusEnabled').checked;
+            appConfig.welcomeBonus = parseInt(document.getElementById('welcomeBonus').value) || 0;
+            appConfig.dynamicText = { 
+                welcomeMessageTemplate: document.getElementById('dynamicWelcomeMessage').value, 
+                shoppingButtonText: document.getElementById('dynamicShoppingButtonText').value, 
+                shoppingButtonLink: document.getElementById('dynamicShoppingButtonLink').value 
+            };
+        });
+        window.saveGamificationSettings = () => createSaveFunction('Gamification', () => {
+            if (!appConfig.gamification) appConfig.gamification = {};
+            appConfig.gamification.enabled = document.getElementById('gamificationEnabled').checked;
+            appConfig.gamification.xpPerAd = parseInt(document.getElementById('xpPerAd').value) || 0;
+            appConfig.gamification.xpPerReferral = parseInt(document.getElementById('xpPerReferral').value) || 0;
+            appConfig.gamification.xpPerTask = parseInt(document.getElementById('xpPerTask').value) || 0;
+            appConfig.gamification.xpPerCheckin = parseInt(document.getElementById('xpPerCheckin').value) || 0;
+            appConfig.gamification.levelUpBonus = parseInt(document.getElementById('levelUpBonus').value) || 0;
             
-            const switchEl = document.getElementById(`${featureKey}-enabled`);
-            const settingsContainer = document.getElementById(`${featureKey}-settings-container`);
-            settingsContainer.style.display = switchEl.checked ? 'block' : 'none';
-            switchEl.addEventListener('change', (e) => {
-                settingsContainer.style.display = e.target.checked ? 'block' : 'none';
-            });
-        }
-
-        // --- Spin Wheel ---
-        function renderSpinWheelSection() {
-            renderGenericEarningFeature({
-                featureKey: 'spinWheel',
-                containerId: 'spin-wheel-section',
-                sectionTitle: 'Spin Wheel',
-                fields: [
-                    { id: 'cost', label: 'Cost per Spin (Points)', placeholder: '0 for free' },
-                    { id: 'dailyLimit', label: 'Daily Spin Limit', placeholder: 'e.g., 10' }
-                ],
-                listConfig: {
-                    listTitle: 'Spin Wheel Segments (Prizes)',
-                    listKey: 'segments',
-                    itemRenderer: (item, index) => `
-                        <div class="tier-setting" style="grid-template-columns: 2fr 2fr auto;">
-                            <input type="text" data-type="spinSegmentText" data-index="${index}" value="${item.text}" placeholder="Display Text">
-                            <input type="number" data-type="spinSegmentValue" data-index="${index}" value="${item.value}" placeholder="Reward Value">
-                            <button type="button" class="btn-remove" onclick="window.removeSpinSegment(${index})">&times;</button>
-                        </div>`,
-                    addFunction: 'window.addSpinSegment()',
-                    addButtonLabel: 'Add Segment'
+            const levels = Array.from(document.querySelectorAll('.level-setting')).map((el, index) => ({
+                level: index + 1,
+                xp: parseInt(el.querySelector('[data-type="levelXp"]').value) || 0,
+                bonus: parseInt(el.querySelector('[data-type="levelBonus"]').value) || 0
+            }));
+            appConfig.gamification.levels = levels.sort((a, b) => a.xp - b.xp).map((level, index) => ({...level, level: index + 1}));
+        });
+        window.saveManageSettings = () => createSaveFunction('Manage', () => {
+            appConfig.adsReward = parseFloat(document.getElementById('adsReward').value) || 0;
+            appConfig.adsLimit = parseInt(document.getElementById('adsLimit').value) || 0;
+            appConfig.refferBonus = parseInt(document.getElementById('refferBonus').value) || 0;
+            appConfig.currency = document.getElementById('currency').value;
+            appConfig.pointsPerCurrency = parseInt(document.getElementById('pointsPerCurrency').value) || 100;
+        });
+        window.saveReferralControlSettings = () => createSaveFunction('Referral Control', () => {
+             appConfig.referralControl = {
+                maxReferrals: parseInt(document.getElementById('maxReferrals').value) || 0,
+                commissionActivation: { adsWatched: parseInt(document.getElementById('referralCommissionActivation').value) || 0 },
+                multiLevel: {
+                    enabled: document.getElementById('multiLevelReferralEnabled').checked,
+                    level2_commission: parseInt(document.getElementById('referral-level2-commission').value) || 0,
+                    level3_commission: parseInt(document.getElementById('referral-level3-commission').value) || 0
                 }
-            });
-        }
-        window.addSpinSegment = () => { if (!appConfig.spinWheel.segments) appConfig.spinWheel.segments = []; appConfig.spinWheel.segments.push({ text: 'Prize', value: 0 }); renderSpinWheelSection(); };
-        window.removeSpinSegment = (index) => { if (confirm('Are you sure?')) { appConfig.spinWheel.segments.splice(index, 1); renderSpinWheelSection(); } };
-        window.saveSpinWheelSettings = () => createSaveFunction('Spin Wheel', () => {
-            appConfig.spinWheel = {
-                enabled: document.getElementById('spinWheel-enabled').checked,
-                cost: parseInt(document.getElementById('spinWheel-cost').value) || 0,
-                dailyLimit: parseInt(document.getElementById('spinWheel-dailyLimit').value) || 0,
-                segments: Array.from(document.querySelectorAll('#spinWheel-list-container .tier-setting')).map(el => ({
-                    text: el.querySelector('[data-type="spinSegmentText"]').value,
-                    value: parseInt(el.querySelector('[data-type="spinSegmentValue"]').value) || 0,
-                }))
             };
         });
-
-        // --- Scratch Card ---
-        function renderScratchCardSection() {
-            renderGenericEarningFeature({
-                featureKey: 'scratchCard',
-                containerId: 'scratch-card-section',
-                sectionTitle: 'Scratch Card',
-                fields: [
-                    { id: 'cost', label: 'Cost per Card (Points)', placeholder: '0 for free' },
-                    { id: 'dailyLimit', label: 'Daily Card Limit', placeholder: 'e.g., 10' }
-                ],
-                listConfig: {
-                    listTitle: 'Scratch Card Prizes',
-                    listKey: 'prizes',
-                    itemRenderer: (item, index) => `
-                        <div class="tier-setting" style="grid-template-columns: 1fr 1fr 1fr auto;">
-                            <input type="text" data-type="scratchPrizeText" data-index="${index}" value="${item.text}" placeholder="Display Text">
-                            <input type="number" data-type="scratchPrizeValue" data-index="${index}" value="${item.value}" placeholder="Reward Value">
-                            <input type="number" data-type="scratchPrizeProb" data-index="${index}" value="${item.probability}" placeholder="Probability (%)">
-                            <button type="button" class="btn-remove" onclick="window.removeScratchPrize(${index})">&times;</button>
-                        </div>`,
-                    addFunction: 'window.addScratchPrize()',
-                    addButtonLabel: 'Add Prize'
+        window.saveAdvancedControlSettings = () => createSaveFunction('Advanced Control', () => {
+             appConfig.adWatchTimerSeconds = parseInt(document.getElementById('adWatchTimerSeconds').value) || 30;
+             appConfig.hourlyAdsLimit = parseInt(document.getElementById('hourlyAdsLimit').value) || 25;
+             appConfig.minReferralsForWithdrawal = parseInt(document.getElementById('minReferralsForWithdrawal').value) || 0;
+             appConfig.maintenanceMode = document.getElementById('maintenanceMode').checked;
+        });
+        window.saveFraudDetectionSettings = () => createSaveFunction('Fraud Detection', () => {
+            appConfig.fraudDetection = { 
+                ipSharingLimit: parseInt(document.getElementById('ipSharingLimit').value) || 3,
+                vpnDetection: {
+                    enabled: document.getElementById('vpnDetectionEnabled').checked,
+                    action: document.getElementById('vpn-detection-action').value
                 }
-            });
-        }
-        window.addScratchPrize = () => { if (!appConfig.scratchCard.prizes) appConfig.scratchCard.prizes = []; appConfig.scratchCard.prizes.push({ text: 'Prize', value: 0, probability: 10 }); renderScratchCardSection(); };
-        window.removeScratchPrize = (index) => { if (confirm('Are you sure?')) { appConfig.scratchCard.prizes.splice(index, 1); renderScratchCardSection(); } };
-        window.saveScratchCardSettings = () => createSaveFunction('Scratch Card', () => {
-            appConfig.scratchCard = {
-                enabled: document.getElementById('scratchCard-enabled').checked,
-                cost: parseInt(document.getElementById('scratchCard-cost').value) || 0,
-                dailyLimit: parseInt(document.getElementById('scratchCard-dailyLimit').value) || 0,
-                prizes: Array.from(document.querySelectorAll('#scratchCard-list-container .tier-setting')).map(el => ({
-                    text: el.querySelector('[data-type="scratchPrizeText"]').value,
-                    value: parseInt(el.querySelector('[data-type="scratchPrizeValue"]').value) || 0,
-                    probability: parseInt(el.querySelector('[data-type="scratchPrizeProb"]').value) || 0,
-                }))
             };
         });
-
-        // --- Video Zone ---
-        function renderVideoZoneSection() {
-            renderGenericEarningFeature({
-                featureKey: 'videoZone',
-                containerId: 'video-zone-section',
-                sectionTitle: 'Video Zone',
-                fields: [],
-                listConfig: {
-                    listTitle: 'Videos for Earning',
-                    listKey: 'videos',
-                    itemRenderer: (item, index) => `
-                        <div class="task-setting">
-                           <div class="tier-setting" style="grid-template-columns: 2fr 1fr 1fr 1fr auto;">
-                                <input type="text" data-type="videoTitle" data-index="${index}" value="${item.title}" placeholder="Video Title">
-                                <input type="text" data-type="videoUrl" data-index="${index}" value="${item.url}" placeholder="Video URL (e.g., YouTube)">
-                                <input type="number" data-type="videoDuration" data-index="${index}" value="${item.duration}" placeholder="Duration (sec)">
-                                <input type="number" data-type="videoReward" data-index="${index}" value="${item.reward}" placeholder="Reward">
-                                <button type="button" class="btn-remove" onclick="window.removeVideo(${index})">&times;</button>
-                           </div>
-                        </div>`,
-                    addFunction: 'window.addVideo()',
-                    addButtonLabel: 'Add Video'
+        window.saveAdNetworkSettings = () => createSaveFunction('Ad Network', () => {
+            appConfig.libtlZoneId = document.getElementById('libtlZoneId').value.trim();
+            appConfig.adNetworksEnabled = document.getElementById('adNetworksEnabled').checked; 
+            appConfig.adNetworks = Array.from(document.querySelectorAll('.ad-network-setting')).map((el, index) => ({ 
+                name: el.querySelector(`[data-type="adNetworkName"]`).value, 
+                zoneId: el.querySelector(`[data-type="adNetworkZoneId"]`).value, 
+                reward: parseFloat(el.querySelector(`[data-type="adNetworkReward"]`).value) || 0,
+                timer: parseInt(el.querySelector(`[data-type="adNetworkTimer"]`).value) || 0,
+                enabled: el.querySelector(`[data-type="adNetworkItemEnabled"]`).checked 
+            }));
+        });
+        window.saveDailyCheckinSettings = () => createSaveFunction('Daily Check-in', () => {
+            appConfig.dailyCheckinEnabled = document.getElementById('dailyCheckinEnabled').checked;
+            appConfig.dailyCheckinRewards = Array.from(document.querySelectorAll('.daily-checkin-item')).map((el, index) => ({ 
+                day: index + 1,
+                reward: parseFloat(el.querySelector(`[data-type="checkinReward"]`).value) || 0
+            }));
+        });
+        window.saveTasksSettings = () => createSaveFunction('Tasks', () => {
+            appConfig.tasksEnabled = document.getElementById('tasksEnabled').checked;
+            appConfig.tasks = Array.from(document.querySelectorAll('.task-setting')).map((el, index) => {
+                const type = el.querySelector(`[data-type="taskType"]`).value;
+                const task = {
+                    id: appConfig.tasks[index]?.id || Date.now() + index,
+                    title: el.querySelector(`[data-type="taskTitle"]`).value,
+                    iconUrl: el.querySelector(`[data-type="taskIconUrl"]`).value,
+                    reward: parseFloat(el.querySelector(`[data-type="taskReward"]`).value) || 0,
+                    enabled: el.querySelector(`[data-type="taskItemEnabled"]`).checked,
+                    type: type
+                };
+                if (type === 'join_claim') task.link = el.querySelector(`[data-type="taskLink"]`).value;
+                if (type === 'screenshot') task.description = el.querySelector(`[data-type="taskDescription"]`).value;
+                if (type === 'question_answer') {
+                    task.question = el.querySelector(`[data-type="taskQuestion"]`).value;
+                    task.answer = el.querySelector(`[data-type="taskAnswer"]`).value;
                 }
+                if (type === 'watch_ads_claim') {
+                    task.requiredAds = parseInt(el.querySelector(`[data-type="taskRequiredAds"]`).value) || 0;
+                }
+                return task;
             });
-        }
-        window.addVideo = () => { if (!appConfig.videoZone.videos) appConfig.videoZone.videos = []; appConfig.videoZone.videos.push({ title: 'New Video', url: '', duration: 30, reward: 10 }); renderVideoZoneSection(); };
-        window.removeVideo = (index) => { if (confirm('Are you sure?')) { appConfig.videoZone.videos.splice(index, 1); renderVideoZoneSection(); } };
-        window.saveVideoZoneSettings = () => createSaveFunction('Video Zone', () => {
-            appConfig.videoZone = {
-                enabled: document.getElementById('videoZone-enabled').checked,
-                videos: Array.from(document.querySelectorAll('#videoZone-list-container .tier-setting')).map(el => ({
-                    title: el.querySelector('[data-type="videoTitle"]').value,
-                    url: el.querySelector('[data-type="videoUrl"]').value,
-                    duration: parseInt(el.querySelector('[data-type="videoDuration"]').value) || 0,
-                    reward: parseInt(el.querySelector('[data-type="videoReward"]').value) || 0,
-                }))
-            };
         });
 
-        // --- Quiz System ---
-        function renderQuizSystemSection() {
-            const container = document.getElementById('quiz-system-section');
-            const config = appConfig.quizSystem || { enabled: false, rewardPerCorrect: 5, categories: [] };
-
-            container.innerHTML = `
-                <div class="section-toggle">
-                    <label>Enable Quiz System</label>
-                    <label class="switch"><input type="checkbox" id="quizSystem-enabled" ${config.enabled ? 'checked' : ''}><span class="slider"></span></label>
-                </div>
-                <div id="quizSystem-settings-container" style="padding-top: 15px; border-top: 1px solid #eee; margin-top: 15px;">
-                    <div class="form-group">
-                        <label for="quizSystem-rewardPerCorrect">Reward per Correct Answer</label>
-                        <input type="number" id="quizSystem-rewardPerCorrect" value="${config.rewardPerCorrect}">
-                    </div>
-                    <hr>
-                    <h4>Quiz Categories & Questions</h4>
-                    <div id="quiz-categories-container">
-                        ${(config.categories || []).map((cat, catIndex) => `
-                            <div class="quiz-category">
-                                <div class="quiz-category-header">
-                                    <input type="text" class="form-group" style="flex-grow: 1; margin: 0;" data-type="quizCatName" data-cat-index="${catIndex}" value="${cat.name}" placeholder="Category Name">
-                                    <button type="button" class="btn-remove" onclick="window.removeQuizCategory(${catIndex})">&times;</button>
-                                </div>
-                                <div id="questions-container-${catIndex}">
-                                    ${(cat.questions || []).map((q, qIndex) => `
-                                        <div class="quiz-question">
-                                            <input type="text" class="form-group" data-type="quizQuestionText" data-cat-index="${catIndex}" data-q-index="${qIndex}" value="${q.q}" placeholder="Question">
-                                            ${(q.options || []).map((opt, optIndex) => `
-                                                <div class="quiz-option">
-                                                    <input type="radio" name="correct-answer-${catIndex}-${qIndex}" ${q.answer === opt ? 'checked' : ''} onchange="window.setCorrectAnswer(${catIndex}, ${qIndex}, ${optIndex})">
-                                                    <input type="text" style="flex-grow: 1;" data-type="quizOptionText" data-cat-index="${catIndex}" data-q-index="${qIndex}" data-opt-index="${optIndex}" value="${opt}" placeholder="Option ${optIndex + 1}">
-                                                </div>
-                                            `).join('')}
-                                            <button type="button" class="btn-remove" style="font-size: 0.8rem; padding: 5px 8px; margin-top: 5px;" onclick="window.removeQuizQuestion(${catIndex}, ${qIndex})">Remove Question</button>
-                                        </div>
-                                    `).join('')}
-                                </div>
-                                <button type="button" class="btn-add" style="font-size: 0.9rem;" onclick="window.addQuizQuestion(${catIndex})">Add Question</button>
-                            </div>
-                        `).join('')}
-                    </div>
-                    <button type="button" class="btn-add" onclick="window.addQuizCategory()">Add Category</button>
-                </div>
-            `;
-            
-            const switchEl = document.getElementById('quizSystem-enabled');
-            const settingsContainer = document.getElementById('quizSystem-settings-container');
-            settingsContainer.style.display = switchEl.checked ? 'block' : 'none';
-            switchEl.addEventListener('change', (e) => {
-                settingsContainer.style.display = e.target.checked ? 'block' : 'none';
-            });
-        }
-        window.addQuizCategory = () => { if (!appConfig.quizSystem.categories) appConfig.quizSystem.categories = []; appConfig.quizSystem.categories.push({ name: 'New Category', questions: [] }); renderQuizSystemSection(); };
-        window.removeQuizCategory = (catIndex) => { if (confirm('Are you sure?')) { appConfig.quizSystem.categories.splice(catIndex, 1); renderQuizSystemSection(); } };
-        window.addQuizQuestion = (catIndex) => { appConfig.quizSystem.categories[catIndex].questions.push({ q: '', options: ['', '', ''], answer: '' }); renderQuizSystemSection(); };
-        window.removeQuizQuestion = (catIndex, qIndex) => { appConfig.quizSystem.categories[catIndex].questions.splice(qIndex, 1); renderQuizSystemSection(); };
-        window.setCorrectAnswer = (catIndex, qIndex, optIndex) => { const optionText = document.querySelector(`[data-type="quizOptionText"][data-cat-index="${catIndex}"][data-q-index="${qIndex}"][data-opt-index="${optIndex}"]`).value; appConfig.quizSystem.categories[catIndex].questions[qIndex].answer = optionText; };
-        window.saveQuizSystemSettings = () => createSaveFunction('Quiz System', () => {
-            appConfig.quizSystem = {
-                enabled: document.getElementById('quizSystem-enabled').checked,
-                rewardPerCorrect: parseInt(document.getElementById('quizSystem-rewardPerCorrect').value) || 0,
-                categories: Array.from(document.querySelectorAll('.quiz-category')).map((catEl, catIndex) => ({
-                    name: catEl.querySelector('[data-type="quizCatName"]').value,
-                    questions: Array.from(catEl.querySelectorAll('.quiz-question')).map((qEl, qIndex) => {
-                        const options = Array.from(qEl.querySelectorAll('[data-type="quizOptionText"]')).map(optEl => optEl.value);
-                        const correctRadio = qEl.querySelector(`input[name="correct-answer-${catIndex}-${qIndex}"]:checked`);
-                        let answer = '';
-                        if (correctRadio) {
-                           const correctOptionInput = correctRadio.nextElementSibling;
-                           answer = correctOptionInput.value;
-                        }
-                        return {
-                            q: qEl.querySelector('[data-type="quizQuestionText"]').value,
-                            options: options,
-                            answer: answer
-                        };
-                    })
-                }))
+        window.saveUserTiersSettings = () => createSaveFunction('User Tiers', () => {
+            appConfig.userTiersEnabled = document.getElementById('userTiersEnabled').checked; 
+            const tempTiers = Array.from(document.querySelectorAll('.tier-setting')).map((el, index) => ({
+                name: el.querySelector(`[data-type="tierName"]`).value,
+                requiredPoints: parseInt(el.querySelector(`[data-type="tierRequiredPoints"]`).value) || 0,
+                bonusPercent: parseInt(el.querySelector(`[data-type="tierBonusPercent"]`).value) || 0,
+                minWithdraw: parseInt(el.querySelector(`[data-type="tierMinWithdraw"]`).value) || 0,
+                dailyWithdrawLimit: parseInt(el.querySelector(`[data-type="tierDailyLimit"]`).value) || 0
+            }));
+            appConfig.userTiers = tempTiers.sort((a,b) => a.requiredPoints - b.requiredPoints);
+        });
+        
+        window.saveWithdrawalSettings = () => createSaveFunction('Withdrawal', () => {
+            appConfig.minWithdraw = parseFloat(document.getElementById('minWithdraw').value) || 0;
+            appConfig.withdrawalFeePercent = parseFloat(document.getElementById('withdrawalFeePercent').value) || 0;
+            appConfig.withdrawalMethodsEnabled = document.getElementById('withdrawalMethodsEnabled').checked; 
+            appConfig.withdrawalMethods = Array.from(document.querySelectorAll('.method-setting')).map((el, index) => ({ 
+                name: el.querySelector(`[data-type="methodName"]`).value,
+                bn_name: el.querySelector(`[data-type="methodBnName"]`).value, 
+                logo: el.querySelector(`[data-type="methodLogo"]`).value, 
+                min: parseFloat(el.querySelector(`[data-type="methodMin"]`).value) || 0, 
+                max: parseFloat(el.querySelector(`[data-type="methodMax"]`).value) || 0, 
+                enabled: el.querySelector(`[data-type="methodItemEnabled"]`).checked 
+            }));
+        });
+        window.saveOfferwallSettings = () => createSaveFunction('Offerwall', () => {
+            appConfig.offerwall = {
+                enabled: document.getElementById('offerwallEnabled').checked,
+                code: document.getElementById('offerwallCode').value
             };
         });
-
-        // --- Captcha Entry ---
-        function renderCaptchaEntrySection() {
-             renderGenericEarningFeature({
-                featureKey: 'captchaEntry',
-                containerId: 'captcha-entry-section',
-                sectionTitle: 'Captcha Entry',
-                fields: [
-                    { id: 'reward', label: 'Reward per Correct Captcha', placeholder: 'e.g., 1' },
-                    { id: 'dailyLimit', label: 'Daily Captcha Limit', placeholder: 'e.g., 50' }
-                ]
-            });
-        }
-        window.saveCaptchaEntrySettings = () => createSaveFunction('Captcha Entry', () => {
-             appConfig.captchaEntry = {
-                enabled: document.getElementById('captchaEntry-enabled').checked,
-                reward: parseInt(document.getElementById('captchaEntry-reward').value) || 0,
-                dailyLimit: parseInt(document.getElementById('captchaEntry-dailyLimit').value) || 0
+        window.saveLotterySettings = () => createSaveFunction('Lottery', () => {
+             appConfig.lottery = {
+                enabled: document.getElementById('lotteryEnabled').checked,
+                ticketPrice: parseInt(document.getElementById('lotteryTicketPrice').value) || 100,
+                prizeAmount: parseInt(document.getElementById('lotteryPrizeAmount').value) || 5000
             };
         });
-
-        // #### END: NEW FEATURE RENDER AND SAVE FUNCTIONS ####
-
+        window.saveLeaderboardSettings = () => createSaveFunction('Leaderboard', () => {
+            appConfig.leaderboard = {
+                enabled: document.getElementById('leaderboardEnabled').checked,
+                resetFrequency: document.getElementById('leaderboardReset').value,
+                rewards: {
+                    top1: parseInt(document.getElementById('leaderboardTop1').value) || 0,
+                    top2: parseInt(document.getElementById('leaderboardTop2').value) || 0,
+                    top3: parseInt(document.getElementById('leaderboardTop3').value) || 0
+                }
+            };
+        });
+        window.saveStoreSettings = () => createSaveFunction('Store', () => {
+            appConfig.storeEnabled = document.getElementById('storeEnabled').checked;
+            appConfig.pointPackages = Array.from(document.querySelectorAll('.package-setting')).map((el, index) => ({ 
+                price: parseFloat(el.querySelector('[data-type="packagePrice"]').value) || 0, 
+                currency: el.querySelector('[data-type="packageCurrency"]').value, 
+                points: parseInt(el.querySelector('[data-type="packagePoints"]').value) || 0,
+                enabled: true 
+            }));
+        });
+        window.saveTextManagementSettings = () => createSaveFunction('Text Management', () => {
+            appConfig.textStrings.navHome = document.getElementById('text-navHome').value;
+            appConfig.textStrings.navEarn = document.getElementById('text-navEarn').value;
+            appConfig.textStrings.navRefer = document.getElementById('text-navRefer').value;
+            appConfig.textStrings.navProfile = document.getElementById('text-navProfile').value;
+            appConfig.textStrings.referTitle = document.getElementById('text-referTitle').value;
+            appConfig.textStrings.referLinkTitle = document.getElementById('text-referLinkTitle').value;
+        });
+        window.saveAdvancedTextSettings = () => createSaveFunction('Advanced Text', () => {
+            appConfig.uiStrings = {
+                balanceLabel: document.getElementById('ui-balanceLabel').value,
+                totalEarningsLabel: document.getElementById('ui-totalEarningsLabel').value,
+                adsWatchedLabel: document.getElementById('ui-adsWatchedLabel').value,
+                totalReferralsLabel: document.getElementById('ui-totalReferralsLabel').value,
+                requestWithdrawalBtn: document.getElementById('ui-requestWithdrawalBtn').value,
+                transactionHistoryBtn: document.getElementById('ui-transactionHistoryBtn').value,
+            };
+        });
+        window.saveErrorMessagesSettings = () => createSaveFunction('Error Messages', () => {
+             document.querySelectorAll('.error-message-setting input').forEach(input => {
+                appConfig.textStrings.errorMessages[input.dataset.key] = input.value;
+            });
+        });
+        
         window.saveAllSettings = async () => {
-            // Save existing settings
             window.saveTechnicalSettings();
             window.saveAssetSettings();
             window.saveIpManagementSettings();
@@ -3213,7 +3126,8 @@
             window.saveReferralControlSettings();
             window.saveAdvancedControlSettings();
             window.saveFraudDetectionSettings();
-            window.saveAdSystemSettings(); 
+            window.saveAdSystemSettings(); // নতুন ফাংশন কল
+            window.saveAdNetworkSettings();
             window.saveDailyCheckinSettings();
             window.saveTasksSettings();
             window.saveUserTiersSettings();
@@ -3225,13 +3139,6 @@
             window.saveTextManagementSettings();
             window.saveAdvancedTextSettings();
             window.saveErrorMessagesSettings();
-            
-            // Save NEW settings
-            window.saveSpinWheelSettings();
-            window.saveScratchCardSettings();
-            window.saveVideoZoneSettings();
-            window.saveQuizSystemSettings();
-            window.saveCaptchaEntrySettings();
 
             if (await saveConfigToFirebase()) {
                 showToast('All settings have been updated successfully!', 'success');
